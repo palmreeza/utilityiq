@@ -2,6 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import {
   addOrganisationMember,
+  removeOrganisationMember,
   createAssessment,
   createRoadmapItems,
   deleteRoadmapItemsForAssessment,
@@ -38,6 +39,7 @@ import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
 import { systemRouter } from "./_core/systemRouter";
 import {
   assessmentTemplates,
+  assessmentParticipants,
   capabilities,
   domains,
   levelDescriptors,
@@ -82,7 +84,9 @@ export const appRouter = router({
     }),
 
     get: protectedProcedure.input(z.object({ id: z.number() })).query(async ({ ctx, input }) => {
-      await requireOrgAccess(ctx.user.id, input.id);
+      if (ctx.user.platformRole !== "platform_owner" && ctx.user.role !== "admin") {
+        await requireOrgAccess(ctx.user.id, input.id);
+      }
       return getOrganisationById(input.id);
     }),
 
@@ -144,7 +148,9 @@ export const appRouter = router({
     members: protectedProcedure
       .input(z.object({ orgId: z.number() }))
       .query(async ({ ctx, input }) => {
-        await requireOrgAccess(ctx.user.id, input.orgId);
+        if (ctx.user.platformRole !== "platform_owner" && ctx.user.role !== "admin") {
+          await requireOrgAccess(ctx.user.id, input.orgId);
+        }
         return getOrganisationMembers(input.orgId);
       }),
 
@@ -157,7 +163,10 @@ export const appRouter = router({
         })
       )
       .mutation(async ({ ctx, input }) => {
-        await requireOrgAccess(ctx.user.id, input.orgId, ["organisation_admin"]);
+        // Platform owners can manage any org; org admins can manage their own org
+        if (ctx.user.platformRole !== "platform_owner" && ctx.user.role !== "admin") {
+          await requireOrgAccess(ctx.user.id, input.orgId, ["organisation_admin"]);
+        }
         await addOrganisationMember({
           organisationId: input.orgId,
           userId: input.userId,
@@ -172,10 +181,27 @@ export const appRouter = router({
           entityId: input.userId,
           metadata: { role: input.orgRole },
         });
+                return { success: true };
+      }),
+
+    removeMember: protectedProcedure
+      .input(z.object({ orgId: z.number(), userId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        if (ctx.user.platformRole !== "platform_owner" && ctx.user.role !== "admin") {
+          await requireOrgAccess(ctx.user.id, input.orgId, ["organisation_admin"]);
+        }
+        await removeOrganisationMember(input.orgId, input.userId);
+        await logAuditEvent({
+          organisationId: input.orgId,
+          userId: ctx.user.id,
+          action: "member.removed",
+          entityType: "user",
+          entityId: input.userId,
+          metadata: {},
+        });
         return { success: true };
       }),
   }),
-
   // ── Templates ────────────────────────────────────────────────────────────
   templates: router({
     list: protectedProcedure.query(() => getTemplates()),
@@ -262,7 +288,9 @@ export const appRouter = router({
         })
       )
       .mutation(async ({ ctx, input }) => {
-        await requireOrgAccess(ctx.user.id, input.orgId, ["organisation_admin", "facilitator"]);
+        if (ctx.user.platformRole !== "platform_owner" && ctx.user.role !== "admin") {
+          await requireOrgAccess(ctx.user.id, input.orgId, ["organisation_admin", "facilitator"]);
+        }
         const result = await createAssessment({
           organisationId: input.orgId,
           templateId: input.templateId,
@@ -272,6 +300,15 @@ export const appRouter = router({
           createdByUserId: ctx.user.id,
         });
         const assessmentId = (result as any).insertId;
+        // Auto-add creator as facilitator participant
+        const db2 = await getDb();
+        if (db2) {
+          await db2.insert(assessmentParticipants).values({
+            assessmentId,
+            userId: ctx.user.id,
+            participantRole: "facilitator",
+          }).onDuplicateKeyUpdate({ set: { participantRole: "facilitator" } });
+        }
         await logAuditEvent({
           assessmentId,
           organisationId: input.orgId,

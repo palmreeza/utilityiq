@@ -471,3 +471,16 @@ export async function getAuditLog(assessmentId: number) {
     .orderBy(desc(auditLog.createdAt))
     .limit(200);
 }
+
+export async function removeOrganisationMember(organisationId: number, userId: number) {
+  const db = await getDb();
+  if (!db) return;
+  await db
+    .delete(organisationMembers)
+    .where(
+      and(
+        eq(organisationMembers.organisationId, organisationId),
+        eq(organisationMembers.userId, userId)
+      )
+    );
+}

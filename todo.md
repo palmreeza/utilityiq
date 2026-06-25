@@ -79,3 +79,12 @@
 - [ ] Update frontend login/signup page to use email/password form
 - [ ] Remove all OAUTH_SERVER_URL / VITE_OAUTH_PORTAL_URL dependencies from server
 - [ ] Test production build locally and push to GitHub
+
+## Critical Workflow Fixes
+- [x] Admin Panel: Organisation detail view with member list and Add Member UI (search user by email, assign role)
+- [x] Admin Panel: Remove member from organisation
+- [x] Dashboard: Empty state for users with no organisation memberships (already handled)
+- [x] Assessment workspace: Auto-add creator as facilitator participant when assessment is created
+- [x] AssessmentList page: Show assessments for the user's organisations correctly
+- [x] Org Settings: Member management tab for Org Admins
+- [x] Fix platform_owner permission bypass for org.get, org.members, org.addMember, assessments.create

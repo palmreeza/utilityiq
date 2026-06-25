@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export type AuthUser = {
   id: number;
@@ -8,29 +8,7 @@ export type AuthUser = {
   platformRole: "platform_owner" | "member";
 };
 
-type AuthState = {
-  user: AuthUser | null;
-  loading: boolean;
-  error: Error | null;
-  isAuthenticated: boolean;
-};
-
-type UseAuthOptions = {
-  redirectOnUnauthenticated?: boolean;
-  redirectPath?: string;
-};
-
-// Simple fetch wrapper for our REST auth endpoints
-async function fetchMe(): Promise<AuthUser | null> {
-  try {
-    const res = await fetch("/api/auth/me", { credentials: "include" });
-    if (res.status === 401) return null;
-    if (!res.ok) return null;
-    return await res.json();
-  } catch {
-    return null;
-  }
-}
+// ── REST helpers ────────────────────────────────────────────────────────────
 
 export async function authLogin(email: string, password: string): Promise<AuthUser> {
   const res = await fetch("/api/auth/login", {
@@ -60,66 +38,93 @@ export async function authLogout(): Promise<void> {
   await fetch("/api/auth/logout", { method: "POST", credentials: "include" });
 }
 
-// Singleton state so all useAuth() calls share the same data
-let _user: AuthUser | null = null;
-let _loading = true;
-let _listeners: Array<() => void> = [];
-let _fetched = false;
+// ── Shared singleton cache (avoids duplicate fetches across component tree) ──
 
-function notify() {
-  _listeners.forEach(fn => fn());
+type AuthCache = {
+  user: AuthUser | null;
+  loading: boolean;
+  promise: Promise<void> | null;
+};
+
+const cache: AuthCache = { user: null, loading: true, promise: null };
+const listeners = new Set<() => void>();
+
+function notifyAll() {
+  listeners.forEach(fn => fn());
 }
 
-async function loadUser() {
-  if (_fetched) return;
-  _fetched = true;
-  _loading = true;
-  notify();
-  _user = await fetchMe();
-  _loading = false;
-  notify();
+function fetchCurrentUser(): Promise<void> {
+  if (cache.promise) return cache.promise;
+  cache.promise = fetch("/api/auth/me", { credentials: "include" })
+    .then(async res => {
+      cache.user = res.ok ? await res.json() : null;
+    })
+    .catch(() => {
+      cache.user = null;
+    })
+    .finally(() => {
+      cache.loading = false;
+      cache.promise = null;
+      notifyAll();
+    });
+  return cache.promise;
 }
 
-loadUser();
+// Kick off the initial fetch immediately so it's ready by first render
+fetchCurrentUser();
+
+// ── Hook ─────────────────────────────────────────────────────────────────────
+
+type UseAuthOptions = {
+  redirectOnUnauthenticated?: boolean;
+  redirectPath?: string;
+};
 
 export function useAuth(options?: UseAuthOptions) {
   const { redirectOnUnauthenticated = false, redirectPath = "/" } = options ?? {};
-  const [, forceUpdate] = useState(0);
+
+  // Local state mirrors the shared cache so React re-renders on change
+  const [, tick] = useState(0);
 
   useEffect(() => {
-    const listener = () => forceUpdate(n => n + 1);
-    _listeners.push(listener);
-    return () => { _listeners = _listeners.filter(l => l !== listener); };
+    const rerender = () => tick(n => n + 1);
+    listeners.add(rerender);
+    // If the cache is still loading, ensure the fetch is running
+    if (cache.loading) fetchCurrentUser();
+    return () => { listeners.delete(rerender); };
   }, []);
 
   const logout = useCallback(async () => {
     await authLogout();
-    _user = null;
-    _fetched = false;
-    notify();
+    cache.user = null;
+    cache.loading = false;
+    notifyAll();
     window.location.href = "/";
   }, []);
 
   const refresh = useCallback(async () => {
-    _fetched = false;
-    await loadUser();
+    cache.loading = true;
+    cache.promise = null;
+    notifyAll();
+    await fetchCurrentUser();
   }, []);
 
-  const state = useMemo<AuthState>(() => ({
-    user: _user,
-    loading: _loading,
-    error: null,
-    isAuthenticated: Boolean(_user),
-  }), []);
-
+  // Redirect if unauthenticated
   useEffect(() => {
     if (!redirectOnUnauthenticated) return;
-    if (_loading) return;
-    if (_user) return;
+    if (cache.loading) return;
+    if (cache.user) return;
     if (typeof window === "undefined") return;
     if (window.location.pathname === redirectPath) return;
     window.location.href = redirectPath;
-  }, [redirectOnUnauthenticated, redirectPath]);
+  });
 
-  return { ...state, logout, refresh };
+  return {
+    user: cache.user,
+    loading: cache.loading,
+    error: null as Error | null,
+    isAuthenticated: Boolean(cache.user),
+    logout,
+    refresh,
+  };
 }

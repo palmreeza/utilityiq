@@ -57,9 +57,21 @@ Set these in Railway → Project → Variables:
 The project uses:
 - **Build command:** `pnpm run build`
 - **Start command:** `node dist/index.js`
-- **Node version:** 22+
+- **Node version:** 20.11.0+ (required — `import.meta.dirname` is not available in Node 18)
 
 Railway detects these automatically via `railway.json` and `package.json`.
+
+> **If Railway defaults to Node 18**, add this environment variable in Railway → Variables:
+> `NIXPACKS_NODE_VERSION` = `20`
+
+## Troubleshooting
+
+| Error | Cause | Fix |
+| :--- | :--- | :--- |
+| `TypeError: The "path" argument must be of type string. Received undefined` | Running on Node 18 | Set `NIXPACKS_NODE_VERSION=20` in Railway Variables |
+| `[OAuth] ERROR: OAUTH_SERVER_URL is not configured` | Missing env var | Set `OAUTH_SERVER_URL` in Railway Variables |
+| `Could not find the build directory` | Build failed | Check build logs; ensure `pnpm build` ran successfully |
+| Database connection errors | `DATABASE_URL` not set | Verify the MySQL plugin is attached and `DATABASE_URL` is injected |
 
 ## Post-Deployment Setup
 

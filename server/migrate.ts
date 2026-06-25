@@ -129,7 +129,7 @@ export async function runMigrations(): Promise<void> {
           // MySQL error 1050 = Table already exists — safe to skip
           // MySQL error 1060 = Duplicate column — safe to skip
           const code = (stmtErr as { code?: string })?.code;
-          if (code === 'ER_TABLE_EXISTS_ERROR' || code === 'ER_DUP_FIELDNAME') {
+          if (code === 'ER_TABLE_EXISTS_ERROR' || code === 'ER_DUP_FIELDNAME' || code === 'ER_DUP_KEYNAME') {
             console.log(`[Migrate] Skipping (already exists): ${statement.slice(0, 60).replace(/\n/g, ' ')}...`);
           } else {
             throw stmtErr;

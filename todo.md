@@ -73,12 +73,12 @@
 - [x] Phase 3: Benchmark comparisons across organisations — deferred to Phase 2 roadmap
 
 ## Railway Deployment Fix — Self-Contained Auth
-- [ ] Replace Manus OAuth with self-contained email/password JWT auth (no external OAuth dependency)
-- [ ] Add password_hash column to users table via migration
-- [ ] Build /api/auth/register, /api/auth/login, /api/auth/logout REST endpoints
-- [ ] Update frontend login/signup page to use email/password form
-- [ ] Remove all OAUTH_SERVER_URL / VITE_OAUTH_PORTAL_URL dependencies from server
-- [ ] Test production build locally and push to GitHub
+- [x] Replace Manus OAuth with self-contained email/password JWT auth (no external OAuth dependency)
+- [x] Add password_hash column to users table via migration
+- [x] Build /api/auth/register, /api/auth/login, /api/auth/logout REST endpoints
+- [x] Update frontend login/signup page to use email/password form
+- [x] Remove all OAUTH_SERVER_URL / VITE_OAUTH_PORTAL_URL dependencies from server
+- [x] Test production build locally and push to GitHub
 
 ## Critical Workflow Fixes
 - [x] Admin Panel: Organisation detail view with member list and Add Member UI (search user by email, assign role)

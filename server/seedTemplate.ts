@@ -1,0 +1,396 @@
+/**
+ * Utility IQ — Default Template Seed
+ * Seeds the 8-domain Energy Maturity Assessment template with
+ * capabilities and 1-5 level descriptors aligned to industry standards.
+ */
+
+export const DEFAULT_TEMPLATE = {
+  name: "Energy & Utility Maturity Assessment",
+  description:
+    "A comprehensive assessment framework covering eight core domains of energy and utility operations, aligned to ISO 50001, ISO 55001, IEC 62056, NIST CSF, C2M2, and the SEI Smart Grid Maturity Model.",
+  version: "1.0",
+  isDefault: true,
+};
+
+export const DOMAINS = [
+  {
+    name: "Meter Management",
+    description: "Assessment of metering infrastructure, AMI/AMR capability, data quality, and meter lifecycle management.",
+    icon: "Gauge",
+    weight: 1.2,
+    sortOrder: 1,
+    standardsAlignment: "IEC 62056 / DLMS-COSEM, AMI/AMR frameworks",
+    capabilities: [
+      {
+        name: "Meter Infrastructure & Coverage",
+        description: "Extent and quality of metering infrastructure across all sites and asset types.",
+        weight: 1.0,
+        levels: [
+          { label: "Initial", description: "Manual meter reading only. No automated data collection. Significant coverage gaps." },
+          { label: "Developing", description: "AMR deployed at primary sites. Basic automated reads. Partial coverage." },
+          { label: "Defined", description: "AMI deployed across majority of sites. Two-way communication established. Coverage >80%." },
+          { label: "Managed", description: "Full AMI coverage. Real-time data streams. Automated exception management." },
+          { label: "Optimising", description: "Predictive meter health monitoring. AI-driven anomaly detection. Near-zero data gaps." },
+        ],
+      },
+      {
+        name: "Meter Data Management",
+        description: "Capability to collect, validate, store, and distribute meter data at scale.",
+        weight: 1.0,
+        levels: [
+          { label: "Initial", description: "Spreadsheet-based data management. Manual validation. No central repository." },
+          { label: "Developing", description: "Basic MDMS in place. Automated collection from some meters. Limited validation rules." },
+          { label: "Defined", description: "Centralised MDMS with automated validation and exception flagging. Data available within 24 hours." },
+          { label: "Managed", description: "Near real-time data availability. Automated VEE processes. Data quality KPIs tracked." },
+          { label: "Optimising", description: "AI-assisted data quality. Predictive gap-filling. Full audit trail and lineage." },
+        ],
+      },
+      {
+        name: "Meter Lifecycle & Asset Management",
+        description: "Management of meter assets from procurement through decommissioning.",
+        weight: 0.8,
+        levels: [
+          { label: "Initial", description: "No formal asset register. Ad hoc replacement. No lifecycle tracking." },
+          { label: "Developing", description: "Basic asset register exists. Reactive maintenance. Limited lifecycle visibility." },
+          { label: "Defined", description: "Full asset register with lifecycle tracking. Planned maintenance schedules." },
+          { label: "Managed", description: "Condition-based maintenance. Automated alerts for meter health. Lifecycle cost tracking." },
+          { label: "Optimising", description: "Predictive replacement modelling. Optimised procurement cycles. Full lifecycle ROI analysis." },
+        ],
+      },
+      {
+        name: "Submetering & Granularity",
+        description: "Depth of metering coverage for tenant, department, and asset-level allocation.",
+        weight: 0.8,
+        levels: [
+          { label: "Initial", description: "Bulk metering only. No submeter visibility. Cost allocation estimated." },
+          { label: "Developing", description: "Submetering at major cost centres. Manual allocation for others." },
+          { label: "Defined", description: "Submetering across key tenants and departments. Automated allocation reports." },
+          { label: "Managed", description: "Granular submeter coverage. Real-time tenant dashboards. Dispute resolution data available." },
+          { label: "Optimising", description: "Full asset-level metering. Dynamic allocation. Automated billing integration." },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Billing",
+    description: "Assessment of billing accuracy, revenue management, tariff optimisation, and commercial metering processes.",
+    icon: "Receipt",
+    weight: 1.1,
+    sortOrder: 2,
+    standardsAlignment: "Utility billing governance best practices, NERSA regulations",
+    capabilities: [
+      {
+        name: "Billing Accuracy & Revenue Assurance",
+        description: "Accuracy of energy billing and processes to detect and recover revenue leakage.",
+        weight: 1.0,
+        levels: [
+          { label: "Initial", description: "Manual billing. High error rate. No revenue assurance process." },
+          { label: "Developing", description: "Automated billing for main accounts. Basic exception reports. Reactive error correction." },
+          { label: "Defined", description: "Automated billing with validation. Revenue assurance process defined. Error rate tracked." },
+          { label: "Managed", description: "Proactive revenue leakage detection. Automated reconciliation. Error rate <1%." },
+          { label: "Optimising", description: "AI-driven anomaly detection. Continuous revenue assurance. Near-zero leakage." },
+        ],
+      },
+      {
+        name: "Tariff Management & Optimisation",
+        description: "Understanding and optimisation of tariff structures including ToU, demand charges, and SSEG.",
+        weight: 1.0,
+        levels: [
+          { label: "Initial", description: "Single tariff applied. No tariff analysis. No demand charge visibility." },
+          { label: "Developing", description: "Tariff structures documented. Basic ToU awareness. Manual demand charge review." },
+          { label: "Defined", description: "Tariff modelling capability. ToU optimisation recommendations. Demand charge tracking." },
+          { label: "Managed", description: "Automated tariff optimisation. Scenario modelling. SSEG and wheeling tariff management." },
+          { label: "Optimising", description: "Dynamic tariff switching. AI-driven optimisation. Full market tariff participation." },
+        ],
+      },
+      {
+        name: "Tenant & Commercial Billing",
+        description: "Capability to accurately bill tenants, departments, or third parties based on metered consumption.",
+        weight: 0.9,
+        levels: [
+          { label: "Initial", description: "Estimated tenant billing. No metered basis. High dispute rate." },
+          { label: "Developing", description: "Basic metered billing for major tenants. Manual processes. Limited audit trail." },
+          { label: "Defined", description: "Metered billing for all tenants. Automated invoicing. Dispute management process." },
+          { label: "Managed", description: "Real-time tenant billing. Automated dispute resolution. Full audit trail." },
+          { label: "Optimising", description: "Predictive billing. Tenant self-service portal. Integrated payment processing." },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Asset Operations",
+    description: "Assessment of asset management maturity, maintenance practices, and operational performance aligned to ISO 55001.",
+    icon: "Settings",
+    weight: 1.1,
+    sortOrder: 3,
+    standardsAlignment: "ISO 55000/55001, GFMAM Asset Management Maturity",
+    capabilities: [
+      {
+        name: "Asset Register & Data Quality",
+        description: "Completeness and accuracy of the asset register and associated data.",
+        weight: 1.0,
+        levels: [
+          { label: "Initial", description: "No formal asset register. Asset data in spreadsheets. Significant gaps." },
+          { label: "Developing", description: "Basic asset register. Incomplete data. Manual updates." },
+          { label: "Defined", description: "Comprehensive asset register. Regular updates. Data quality process defined." },
+          { label: "Managed", description: "Real-time asset data. Automated updates from field systems. Data quality KPIs." },
+          { label: "Optimising", description: "Digital twin integration. Predictive data quality. Full lifecycle traceability." },
+        ],
+      },
+      {
+        name: "Maintenance Strategy & Planning",
+        description: "Maturity of maintenance strategies from reactive to predictive.",
+        weight: 1.0,
+        levels: [
+          { label: "Initial", description: "Fully reactive maintenance. No planned maintenance schedule." },
+          { label: "Developing", description: "Basic preventive maintenance schedules. Limited condition monitoring." },
+          { label: "Defined", description: "Condition-based maintenance for critical assets. Maintenance KPIs tracked." },
+          { label: "Managed", description: "Predictive maintenance using sensor data. Optimised maintenance intervals." },
+          { label: "Optimising", description: "AI-driven predictive maintenance. Self-optimising maintenance schedules." },
+        ],
+      },
+      {
+        name: "Field Operations & Work Management",
+        description: "Efficiency and effectiveness of field operations and work order management.",
+        weight: 0.9,
+        levels: [
+          { label: "Initial", description: "Paper-based work orders. Manual scheduling. No mobile capability." },
+          { label: "Developing", description: "Basic work management system. Limited mobile access. Manual reporting." },
+          { label: "Defined", description: "Integrated work management. Mobile field access. Automated work order routing." },
+          { label: "Managed", description: "Real-time field visibility. Automated scheduling. Performance dashboards." },
+          { label: "Optimising", description: "AI-optimised field scheduling. Predictive dispatch. Continuous improvement loop." },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Analytics",
+    description: "Assessment of data analytics maturity, from basic reporting through to AI-driven operational intelligence.",
+    icon: "BarChart3",
+    weight: 1.0,
+    sortOrder: 4,
+    standardsAlignment: "ISO 8000 Data Quality, DAMA DMBOK",
+    capabilities: [
+      {
+        name: "Data Architecture & Governance",
+        description: "Maturity of data architecture, governance frameworks, and data quality management.",
+        weight: 1.0,
+        levels: [
+          { label: "Initial", description: "No data governance. Siloed data sources. No data quality standards." },
+          { label: "Developing", description: "Basic data governance policy. Some data standards. Limited integration." },
+          { label: "Defined", description: "Data governance framework. Master data management. Data quality KPIs." },
+          { label: "Managed", description: "Automated data quality monitoring. Integrated data platform. Lineage tracking." },
+          { label: "Optimising", description: "AI-driven data quality. Real-time governance. Self-service data access." },
+        ],
+      },
+      {
+        name: "Reporting & Dashboards",
+        description: "Capability to produce operational, management, and executive reporting.",
+        weight: 1.0,
+        levels: [
+          { label: "Initial", description: "Manual spreadsheet reports. Infrequent. No standardised format." },
+          { label: "Developing", description: "Basic automated reports. Standard templates. Limited self-service." },
+          { label: "Defined", description: "Automated dashboards. Role-based access. Near real-time data." },
+          { label: "Managed", description: "Self-service analytics. Predictive insights. Executive dashboards." },
+          { label: "Optimising", description: "AI-generated insights. Natural language queries. Prescriptive analytics." },
+        ],
+      },
+      {
+        name: "Forecasting & Demand Intelligence",
+        description: "Ability to forecast energy demand, costs, and operational requirements.",
+        weight: 0.9,
+        levels: [
+          { label: "Initial", description: "No forecasting capability. Reactive planning only." },
+          { label: "Developing", description: "Basic trend analysis. Manual forecasts. Limited accuracy." },
+          { label: "Defined", description: "Statistical forecasting models. Automated demand projections." },
+          { label: "Managed", description: "ML-based forecasting. Scenario planning. High accuracy (>90%)." },
+          { label: "Optimising", description: "AI-driven real-time forecasting. Self-learning models. Integrated with operations." },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Cybersecurity",
+    description: "Assessment of OT/IT cybersecurity maturity for energy and utility systems, aligned to NIST CSF and C2M2.",
+    icon: "Shield",
+    weight: 1.0,
+    sortOrder: 5,
+    standardsAlignment: "NIST CSF 2.0, C2M2 (DOE), IEC 62443",
+    capabilities: [
+      {
+        name: "OT/IT Security Architecture",
+        description: "Security architecture for operational technology and IT systems integration.",
+        weight: 1.0,
+        levels: [
+          { label: "Initial", description: "No OT/IT security architecture. Flat networks. No segmentation." },
+          { label: "Developing", description: "Basic network segmentation. Firewall in place. Limited OT visibility." },
+          { label: "Defined", description: "OT/IT security architecture defined. DMZ implemented. Asset inventory." },
+          { label: "Managed", description: "Zero-trust principles applied. Continuous monitoring. Incident response plan." },
+          { label: "Optimising", description: "Adaptive security architecture. AI-driven threat detection. Continuous improvement." },
+        ],
+      },
+      {
+        name: "Identity & Access Management",
+        description: "Management of user identities, access rights, and privileged access for energy systems.",
+        weight: 0.9,
+        levels: [
+          { label: "Initial", description: "Shared credentials. No MFA. No access review process." },
+          { label: "Developing", description: "Individual accounts. Basic MFA on some systems. Annual access reviews." },
+          { label: "Defined", description: "Role-based access control. MFA enforced. Regular access reviews." },
+          { label: "Managed", description: "Privileged access management. Just-in-time access. Automated provisioning." },
+          { label: "Optimising", description: "Zero-trust identity. Continuous access verification. AI-driven anomaly detection." },
+        ],
+      },
+      {
+        name: "Incident Response & Recovery",
+        description: "Capability to detect, respond to, and recover from cybersecurity incidents.",
+        weight: 1.0,
+        levels: [
+          { label: "Initial", description: "No incident response plan. Ad hoc response. No recovery procedures." },
+          { label: "Developing", description: "Basic incident response plan. Limited testing. Manual recovery." },
+          { label: "Defined", description: "Documented IRP. Regular tabletop exercises. Recovery time objectives defined." },
+          { label: "Managed", description: "Automated detection and alerting. Regular drills. RTO/RPO met consistently." },
+          { label: "Optimising", description: "AI-driven threat hunting. Automated response playbooks. Continuous improvement." },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Sustainability",
+    description: "Assessment of sustainability management, carbon reporting, ESG governance, and renewable energy integration.",
+    icon: "Leaf",
+    weight: 1.0,
+    sortOrder: 6,
+    standardsAlignment: "ISO 50001, ISO 14001, GHG Protocol, TCFD",
+    capabilities: [
+      {
+        name: "Energy Management System",
+        description: "Maturity of the energy management system and its alignment to ISO 50001.",
+        weight: 1.0,
+        levels: [
+          { label: "Initial", description: "No formal EnMS. Energy managed reactively. No targets set." },
+          { label: "Developing", description: "Basic energy policy. Some targets. Limited monitoring." },
+          { label: "Defined", description: "ISO 50001-aligned EnMS. Energy baseline established. Regular reviews." },
+          { label: "Managed", description: "Certified ISO 50001. Continuous improvement cycle. Significant efficiency gains." },
+          { label: "Optimising", description: "Best-in-class EnMS. AI-driven optimisation. Industry-leading performance." },
+        ],
+      },
+      {
+        name: "Carbon & Emissions Reporting",
+        description: "Capability to measure, report, and reduce Scope 1, 2, and 3 carbon emissions.",
+        weight: 1.0,
+        levels: [
+          { label: "Initial", description: "No carbon measurement. No emissions reporting. No reduction targets." },
+          { label: "Developing", description: "Basic Scope 1 & 2 measurement. Manual calculations. Annual reporting." },
+          { label: "Defined", description: "GHG Protocol-aligned reporting. Scope 3 partially measured. Verified data." },
+          { label: "Managed", description: "Automated emissions tracking. Science-based targets. Third-party verification." },
+          { label: "Optimising", description: "Real-time carbon accounting. Net-zero roadmap. Continuous reduction." },
+        ],
+      },
+      {
+        name: "Renewable Energy & SSEG",
+        description: "Integration of renewable energy sources, solar PV, and small-scale embedded generation.",
+        weight: 0.9,
+        levels: [
+          { label: "Initial", description: "No renewable energy. Grid-only supply. No SSEG consideration." },
+          { label: "Developing", description: "Some solar PV installed. Basic monitoring. No SSEG registration." },
+          { label: "Defined", description: "Significant renewable capacity. SSEG registered. Wheeling considered." },
+          { label: "Managed", description: "Optimised renewable dispatch. Active wheeling participation. Carbon tracking." },
+          { label: "Optimising", description: "Virtual power plant capability. Full market participation. Net energy positive." },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Customer Engagement",
+    description: "Assessment of customer and stakeholder engagement, self-service capability, and communication maturity.",
+    icon: "Users",
+    weight: 0.9,
+    sortOrder: 7,
+    standardsAlignment: "Utility customer service benchmarks, NERSA, OFWAT",
+    capabilities: [
+      {
+        name: "Customer Communication & Transparency",
+        description: "Quality and frequency of energy-related communication to customers and stakeholders.",
+        weight: 1.0,
+        levels: [
+          { label: "Initial", description: "Reactive communication only. No proactive energy updates. Paper-based." },
+          { label: "Developing", description: "Basic email notifications. Standard billing statements. Limited self-service." },
+          { label: "Defined", description: "Multi-channel communication. Proactive alerts. Online portal available." },
+          { label: "Managed", description: "Personalised communications. Real-time alerts. Self-service portal with analytics." },
+          { label: "Optimising", description: "AI-driven personalisation. Predictive engagement. Omnichannel experience." },
+        ],
+      },
+      {
+        name: "Demand Response & Behavioural Programs",
+        description: "Capability to engage customers in demand response and energy efficiency programmes.",
+        weight: 0.9,
+        levels: [
+          { label: "Initial", description: "No demand response programme. No customer engagement on energy." },
+          { label: "Developing", description: "Basic awareness campaigns. Manual demand response requests." },
+          { label: "Defined", description: "Formal demand response programme. Incentive structures. Participation tracking." },
+          { label: "Managed", description: "Automated demand response. Real-time customer participation. Measurable outcomes." },
+          { label: "Optimising", description: "AI-driven demand orchestration. Dynamic incentives. Virtual power plant integration." },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Smart Infrastructure",
+    description: "Assessment of smart grid, IoT, and distributed energy infrastructure maturity aligned to the SEI SGMM.",
+    icon: "Zap",
+    weight: 1.1,
+    sortOrder: 8,
+    standardsAlignment: "SEI Smart Grid Maturity Model (SGMM), GridWise Interoperability Maturity Model",
+    capabilities: [
+      {
+        name: "Grid Modernisation & Automation",
+        description: "Maturity of grid automation, SCADA, and distribution management systems.",
+        weight: 1.0,
+        levels: [
+          { label: "Initial", description: "Manual grid operations. No SCADA. Reactive fault management." },
+          { label: "Developing", description: "Basic SCADA deployed. Limited automation. Manual switching." },
+          { label: "Defined", description: "Advanced SCADA/DMS. Automated switching. Fault detection and isolation." },
+          { label: "Managed", description: "Self-healing grid capabilities. Automated restoration. Real-time optimisation." },
+          { label: "Optimising", description: "Fully autonomous grid operations. AI-driven optimisation. Predictive management." },
+        ],
+      },
+      {
+        name: "IoT & Connected Devices",
+        description: "Extent and maturity of IoT device deployment and integration across energy infrastructure.",
+        weight: 1.0,
+        levels: [
+          { label: "Initial", description: "No IoT deployment. Isolated systems. No connectivity." },
+          { label: "Developing", description: "Basic IoT sensors deployed. Limited integration. Manual data collection." },
+          { label: "Defined", description: "Integrated IoT platform. Automated data collection. Device management." },
+          { label: "Managed", description: "Large-scale IoT deployment. Real-time analytics. Predictive maintenance." },
+          { label: "Optimising", description: "AI-driven IoT orchestration. Edge computing. Autonomous device management." },
+        ],
+      },
+      {
+        name: "Distributed Energy Resources (DER)",
+        description: "Capability to integrate, monitor, and control distributed energy resources including solar, BESS, and generators.",
+        weight: 1.0,
+        levels: [
+          { label: "Initial", description: "No DER integration. Grid-only operations. No visibility of distributed assets." },
+          { label: "Developing", description: "Basic DER monitoring. Manual coordination. Limited dispatch capability." },
+          { label: "Defined", description: "DER management system. Automated monitoring. Basic dispatch logic." },
+          { label: "Managed", description: "Advanced DERMS. Optimised dispatch. Demand response integration." },
+          { label: "Optimising", description: "Full DER orchestration. Virtual power plant. Market participation ready." },
+        ],
+      },
+      {
+        name: "Interoperability & Integration",
+        description: "Ability to integrate disparate systems, protocols, and platforms across the energy ecosystem.",
+        weight: 0.9,
+        levels: [
+          { label: "Initial", description: "Siloed systems. No integration. Manual data transfer between systems." },
+          { label: "Developing", description: "Point-to-point integrations. Limited API capability. Some automation." },
+          { label: "Defined", description: "Integration platform in place. Standard APIs. CIM/IEC 61968 alignment." },
+          { label: "Managed", description: "Enterprise integration architecture. Real-time data exchange. Open standards." },
+          { label: "Optimising", description: "Ecosystem integration. Marketplace APIs. AI-driven integration management." },
+        ],
+      },
+    ],
+  },
+];

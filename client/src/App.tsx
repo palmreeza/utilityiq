@@ -5,33 +5,52 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import AssessmentList from "./pages/AssessmentList";
+import AssessmentCreate from "./pages/AssessmentCreate";
+import AssessmentWorkspace from "./pages/AssessmentWorkspace";
+import ResultsDashboard from "./pages/ResultsDashboard";
+import RoadmapPage from "./pages/RoadmapPage";
+import ReportPage from "./pages/ReportPage";
+import AuditLogPage from "./pages/AuditLogPage";
+import AdminPanel from "./pages/AdminPanel";
+import OrganisationSettings from "./pages/OrganisationSettings";
 
 function Router() {
-  // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
+      <Route path="/" component={Home} />
+      <Route path="/dashboard" component={Dashboard} />
+      <Route path="/org/:orgId/assessments" component={AssessmentList} />
+      <Route path="/org/:orgId/assessments/create" component={AssessmentCreate} />
+      <Route path="/assessment/:id/workspace" component={AssessmentWorkspace} />
+      <Route path="/assessment/:id/results" component={ResultsDashboard} />
+      <Route path="/assessment/:id/roadmap" component={RoadmapPage} />
+      <Route path="/assessment/:id/report" component={ReportPage} />
+      <Route path="/assessment/:id/audit" component={AuditLogPage} />
+      <Route path="/org/:orgId/settings" component={OrganisationSettings} />
+      <Route path="/admin" component={AdminPanel} />
+      <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
   );
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
-
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
+      <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
-          <Toaster />
+          <Toaster
+            theme="dark"
+            toastOptions={{
+              style: {
+                background: "oklch(0.16 0.012 240)",
+                border: "1px solid oklch(0.22 0.015 240)",
+                color: "oklch(0.96 0.005 240)",
+              },
+            }}
+          />
           <Router />
         </TooltipProvider>
       </ThemeProvider>

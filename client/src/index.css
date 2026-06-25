@@ -85,7 +85,7 @@
 
   /* ── Typography ── */
   --font-sans:    "Inter", system-ui, sans-serif;
-  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-display: "Montserrat", "Space Grotesk", "Inter", system-ui, sans-serif;
   --font-mono:    "JetBrains Mono", "Fira Code", monospace;
 }
 

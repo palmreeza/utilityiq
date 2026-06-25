@@ -71,3 +71,11 @@
 - [x] Phase 3: File upload evidence (S3) — removed by design decision (lightweight evidence reference used instead)
 - [x] Phase 3: Custom assessment templates (admin template builder) — deferred to Phase 2 roadmap
 - [x] Phase 3: Benchmark comparisons across organisations — deferred to Phase 2 roadmap
+
+## Railway Deployment Fix — Self-Contained Auth
+- [ ] Replace Manus OAuth with self-contained email/password JWT auth (no external OAuth dependency)
+- [ ] Add password_hash column to users table via migration
+- [ ] Build /api/auth/register, /api/auth/login, /api/auth/logout REST endpoints
+- [ ] Update frontend login/signup page to use email/password form
+- [ ] Remove all OAUTH_SERVER_URL / VITE_OAUTH_PORTAL_URL dependencies from server
+- [ ] Test production build locally and push to GitHub

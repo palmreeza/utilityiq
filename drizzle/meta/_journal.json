@@ -15,6 +15,13 @@
       "when": 1782388636177,
       "tag": "0001_giant_lake",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1782397608547,
+      "tag": "0002_thin_black_knight",
+      "breakpoints": true
     }
   ]
 }

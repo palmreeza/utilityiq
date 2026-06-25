@@ -1,7 +1,6 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
-import { getLoginUrl } from "@/const";
 import AppLayout from "@/components/AppLayout";
 import {
   Building2, ClipboardList, TrendingUp, Plus, ArrowRight, FileText,
@@ -28,7 +27,7 @@ export default function Dashboard() {
   }
 
   if (!isAuthenticated) {
-    window.location.href = getLoginUrl();
+    window.location.href = "/";
     return null;
   }
 

@@ -1,7 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
-import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
-import { getLoginUrl } from "@/const";
 import { useState } from "react";
 import {
   Zap, LayoutDashboard, Building2,
@@ -16,10 +14,7 @@ interface AppLayoutProps {
 }
 
 export default function AppLayout({ children, title, subtitle, actions }: AppLayoutProps) {
-  const { user, isAuthenticated, loading } = useAuth();
-  const logout = trpc.auth.logout.useMutation({
-    onSuccess: () => { window.location.href = "/"; },
-  });
+  const { user, isAuthenticated, loading, logout } = useAuth();
   const [location, navigate] = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -36,7 +31,7 @@ export default function AppLayout({ children, title, subtitle, actions }: AppLay
   }
 
   if (!isAuthenticated) {
-    window.location.href = getLoginUrl();
+    window.location.href = "/";
     return null;
   }
 
@@ -131,7 +126,7 @@ export default function AppLayout({ children, title, subtitle, actions }: AppLay
             </div>
           </div>
         </div>
-        <button onClick={() => logout.mutate()}
+        <button onClick={() => logout()}
           className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm transition-all duration-150"
           style={{ color: "rgba(255,255,255,0.40)" }}
           onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(226,35,42,0.15)"; (e.currentTarget as HTMLElement).style.color = "#ff8080"; }}

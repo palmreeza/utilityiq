@@ -1,5 +1,4 @@
-import { useAuth } from "@/_core/hooks/useAuth";
-import { getLoginUrl } from "@/const";
+import { useAuth, authLogin, authRegister } from "@/_core/hooks/useAuth";
 import { useLocation } from "wouter";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -89,7 +88,32 @@ function ScoreBar({ score, max = 5, color }: { score: number; max?: number; colo
 export default function Home() {
   const { loading, isAuthenticated } = useAuth();
   const [, navigate] = useLocation();
+  const [authMode, setAuthMode] = useState<"login" | "register">("login");
+  const [authEmail, setAuthEmail] = useState("");
+  const [authPassword, setAuthPassword] = useState("");
+  const [authName, setAuthName] = useState("");
+  const [authError, setAuthError] = useState("");
+  const [authLoading, setAuthLoading] = useState(false);
   const statsRef = useInView();
+
+  const handleAuth = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError("");
+    setAuthLoading(true);
+    try {
+      if (authMode === "login") {
+        await authLogin(authEmail, authPassword);
+      } else {
+        if (!authName.trim()) { setAuthError("Name is required"); setAuthLoading(false); return; }
+        await authRegister(authName, authEmail, authPassword);
+      }
+      window.location.href = "/dashboard";
+    } catch (err: any) {
+      setAuthError(err.message ?? "Authentication failed");
+    } finally {
+      setAuthLoading(false);
+    }
+  };
   const c0 = useCounter(STATS[0].value, 1200, statsRef.inView);
   const c1 = useCounter(STATS[1].value, 1500, statsRef.inView);
   const c2 = useCounter(STATS[2].value, 1000, statsRef.inView);
@@ -141,11 +165,11 @@ export default function Home() {
               </a>
             ))}
           </div>
-          <a href={getLoginUrl()}
+          <button onClick={() => document.getElementById('auth-section')?.scrollIntoView({ behavior: 'smooth' })}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-white transition-all duration-150 active:scale-95"
             style={{ background: "#e2232a", boxShadow: "0 4px 14px rgba(226,35,42,0.35)" }}>
             Sign In <ArrowRight className="w-4 h-4" />
-          </a>
+          </button>
         </div>
       </nav>
 
@@ -179,11 +203,11 @@ export default function Home() {
               </p>
 
               <div className="flex flex-wrap gap-3 mb-10">
-                <a href={getLoginUrl()}
+                <button onClick={() => document.getElementById('auth-section')?.scrollIntoView({ behavior: 'smooth' })}
                   className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-base text-white transition-all duration-150 active:scale-95"
                   style={{ background: "#e2232a", boxShadow: "0 8px 24px rgba(226,35,42,0.40)" }}>
                   Get Started <ArrowRight className="w-5 h-5" />
-                </a>
+                </button>
                 <a href="#features"
                   className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-base border transition-all duration-150"
                   style={{ borderColor: "rgba(255,255,255,0.20)", color: "rgba(255,255,255,0.80)" }}>
@@ -532,12 +556,40 @@ export default function Home() {
               <p className="text-lg mb-10 max-w-xl mx-auto" style={{ color: "rgba(255,255,255,0.60)" }}>
                 Contact IOT.nxt to get your organisation provisioned on Utility IQ and start your first energy maturity assessment.
               </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href={getLoginUrl()}
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-base text-white transition-all duration-150 active:scale-95"
-                  style={{ background: "#e2232a", boxShadow: "0 8px 32px rgba(226,35,42,0.45)" }}>
-                  Sign In to Utility IQ <ArrowRight className="w-5 h-5" />
-                </a>
+              <div id="auth-section" className="flex flex-col items-center gap-4 max-w-sm mx-auto">
+                {/* Auth mode toggle */}
+                <div className="flex rounded-xl overflow-hidden border w-full" style={{ borderColor: "rgba(255,255,255,0.15)" }}>
+                  {(["login", "register"] as const).map((mode) => (
+                    <button key={mode} onClick={() => { setAuthMode(mode); setAuthError(""); }}
+                      className="flex-1 py-2.5 text-sm font-semibold transition-all"
+                      style={{ background: authMode === mode ? "#e2232a" : "transparent", color: authMode === mode ? "#fff" : "rgba(255,255,255,0.50)" }}>
+                      {mode === "login" ? "Sign In" : "Register"}
+                    </button>
+                  ))}
+                </div>
+                <form onSubmit={handleAuth} className="w-full flex flex-col gap-3">
+                  {authMode === "register" && (
+                    <input value={authName} onChange={e => setAuthName(e.target.value)}
+                      placeholder="Full name" required
+                      className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                      style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff" }} />
+                  )}
+                  <input type="email" value={authEmail} onChange={e => setAuthEmail(e.target.value)}
+                    placeholder="Email address" required
+                    className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                    style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff" }} />
+                  <input type="password" value={authPassword} onChange={e => setAuthPassword(e.target.value)}
+                    placeholder="Password" required minLength={8}
+                    className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                    style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff" }} />
+                  {authError && <p className="text-sm text-center" style={{ color: "#ff8080" }}>{authError}</p>}
+                  <button type="submit" disabled={authLoading}
+                    className="w-full inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-base text-white transition-all duration-150 active:scale-95 disabled:opacity-60"
+                    style={{ background: "#e2232a", boxShadow: "0 8px 32px rgba(226,35,42,0.45)" }}>
+                    {authLoading ? "Please wait…" : authMode === "login" ? "Sign In" : "Create Account"}
+                    {!authLoading && <ArrowRight className="w-5 h-5" />}
+                  </button>
+                </form>
               </div>
             </div>
           </div>

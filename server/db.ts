@@ -228,14 +228,17 @@ export async function createAssessment(data: {
   description?: string;
   facilitatorUserId?: number;
   createdByUserId: number;
-}) {
+}): Promise<number> {
   const db = await getDb();
   if (!db) throw new Error("DB not available");
   const result = await db.insert(assessments).values({
     ...data,
     status: "Draft",
   });
-  return result;
+  // Drizzle MySQL returns [ResultSetHeader, FieldPacket[]] — insertId is on index 0
+  const insertId = (result as any)[0]?.insertId ?? (result as any).insertId;
+  if (!insertId) throw new Error("Failed to get assessment insertId");
+  return insertId as number;
 }
 
 export async function getAssessmentsForOrg(orgId: number) {

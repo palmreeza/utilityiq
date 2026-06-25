@@ -201,6 +201,17 @@ export const appRouter = router({
         });
         return { success: true };
       }),
+    myRole: protectedProcedure
+      .input(z.object({ orgId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        // Platform owners have implicit admin access to all orgs
+        if (ctx.user.platformRole === "platform_owner") {
+          return { orgRole: "organisation_admin" as const, isPlatformOwner: true };
+        }
+        const membership = await getUserOrgRole(ctx.user.id, input.orgId);
+        if (!membership) return null;
+        return { orgRole: membership.orgRole, isPlatformOwner: false };
+      }),
   }),
   // ── Templates ────────────────────────────────────────────────────────────
   templates: router({
@@ -291,7 +302,7 @@ export const appRouter = router({
         if (ctx.user.platformRole !== "platform_owner" && ctx.user.role !== "admin") {
           await requireOrgAccess(ctx.user.id, input.orgId, ["organisation_admin", "facilitator"]);
         }
-        const result = await createAssessment({
+        const assessmentId = await createAssessment({
           organisationId: input.orgId,
           templateId: input.templateId,
           name: input.name,
@@ -299,10 +310,23 @@ export const appRouter = router({
           facilitatorUserId: input.facilitatorUserId,
           createdByUserId: ctx.user.id,
         });
-        const assessmentId = (result as any).insertId;
-        // Auto-add creator as facilitator participant
+        // Auto-add all org members as participants so they can score immediately
         const db2 = await getDb();
         if (db2) {
+          const orgMembers = await getOrganisationMembers(input.orgId);
+          for (const member of orgMembers) {
+            const role = member.orgRole === "organisation_admin" || member.orgRole === "facilitator"
+              ? "facilitator"
+              : member.orgRole === "reviewer"
+              ? "reviewer"
+              : "assessor";
+            await db2.insert(assessmentParticipants).values({
+              assessmentId,
+              userId: member.userId,
+              participantRole: role,
+            }).onDuplicateKeyUpdate({ set: { participantRole: role } });
+          }
+          // Also ensure the creator is added (in case they are platform_owner not in org members)
           await db2.insert(assessmentParticipants).values({
             assessmentId,
             userId: ctx.user.id,

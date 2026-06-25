@@ -3,7 +3,7 @@ import { trpc } from "@/lib/trpc";
 import { useLocation, useParams } from "wouter";
 import AppLayout from "@/components/AppLayout";
 import { Button } from "@/components/ui/button";
-import { Plus, ClipboardList, ArrowRight, Calendar, User } from "lucide-react";
+import { Plus, ClipboardList, ArrowRight, Calendar } from "lucide-react";
 import { STATUS_CONFIG } from "../../../shared/types";
 import type { AssessmentStatus } from "../../../shared/types";
 
@@ -18,6 +18,16 @@ export default function AssessmentList() {
     { orgId: orgIdNum },
     { enabled: !!orgIdNum && isAuthenticated }
   );
+  const { data: myRole } = trpc.organisations.myRole.useQuery(
+    { orgId: orgIdNum },
+    { enabled: !!orgIdNum && isAuthenticated }
+  );
+
+  // Only Platform Owner, Org Admin, and Facilitator can create assessments
+  const canCreateAssessment =
+    myRole?.isPlatformOwner ||
+    myRole?.orgRole === "organisation_admin" ||
+    myRole?.orgRole === "facilitator";
 
   return (
     <AppLayout>
@@ -29,10 +39,15 @@ export default function AssessmentList() {
             </div>
             <h1 className="font-display text-2xl font-bold">Assessments</h1>
           </div>
-          <Button onClick={() => navigate(`/org/${orgId}/assessments/create`)}
-            className="gap-2" style={{ background: "#e2232a", color: "#1e3640" }}>
-            <Plus className="w-4 h-4" /> New Assessment
-          </Button>
+          {canCreateAssessment && (
+            <Button
+              onClick={() => navigate(`/org/${orgId}/assessments/create`)}
+              className="gap-2"
+              style={{ background: "#e2232a", color: "#fff" }}
+            >
+              <Plus className="w-4 h-4" /> New Assessment
+            </Button>
+          )}
         </div>
 
         {isLoading ? (
@@ -46,12 +61,18 @@ export default function AssessmentList() {
             <ClipboardList className="w-12 h-12 mx-auto mb-4" style={{ color: "#c9c9c9" }} />
             <h3 className="font-semibold mb-2">No assessments yet</h3>
             <p className="text-sm mb-6" style={{ color: "#727272" }}>
-              Create your first energy maturity assessment to get started.
+              {canCreateAssessment
+                ? "Create your first energy maturity assessment to get started."
+                : "No assessments have been created for this organisation yet."}
             </p>
-            <Button onClick={() => navigate(`/org/${orgId}/assessments/create`)}
-              style={{ background: "#e2232a", color: "#1e3640" }}>
-              Create Assessment
-            </Button>
+            {canCreateAssessment && (
+              <Button
+                onClick={() => navigate(`/org/${orgId}/assessments/create`)}
+                style={{ background: "#e2232a", color: "#fff" }}
+              >
+                Create Assessment
+              </Button>
+            )}
           </div>
         ) : (
           <div className="grid gap-4">
@@ -83,7 +104,7 @@ export default function AssessmentList() {
                       <Button size="sm" variant="outline" onClick={(e) => { e.stopPropagation(); navigate(`/assessment/${a.id}/results`); }}
                         className="text-xs">Results</Button>
                       <Button size="sm" onClick={(e) => { e.stopPropagation(); navigate(`/assessment/${a.id}/workspace`); }}
-                        className="text-xs gap-1" style={{ background: "#e2232a", color: "#1e3640" }}>
+                        className="text-xs gap-1" style={{ background: "#e2232a", color: "#fff" }}>
                         Open <ArrowRight className="w-3 h-3" />
                       </Button>
                     </div>

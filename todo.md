@@ -88,3 +88,9 @@
 - [x] AssessmentList page: Show assessments for the user's organisations correctly
 - [x] Org Settings: Member management tab for Org Admins
 - [x] Fix platform_owner permission bypass for org.get, org.members, org.addMember, assessments.create
+
+## Bug Fixes — Session 2
+- [x] BUG 1: Verify createAssessment insertId fix is in working tree and correct
+- [x] BUG 2: Hide "New Assessment" button from Assessors/Reviewers/Executive Viewers in AssessmentList.tsx
+- [x] Add organisations.myRole tRPC procedure to return current user's org role
+- [x] Update AssessmentList.tsx to query user's org role and conditionally show Create button

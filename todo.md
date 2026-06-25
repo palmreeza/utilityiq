@@ -65,9 +65,9 @@
 - [x] Railway.app deployment config (railway.json + RAILWAY_DEPLOY.md)
 - [x] Final checkpoint
 
-## Future Phases (Not Built Yet)
-- [ ] Phase 2: Facilitator sign-off workflow with email notifications
-- [ ] Phase 2: Assessment invitation links for external assessors
-- [ ] Phase 3: File upload evidence (S3) — deferred by design decision
-- [ ] Phase 3: Custom assessment templates (admin template builder)
-- [ ] Phase 3: Benchmark comparisons across organisations
+## Future Phases (Intentionally Deferred)
+- [x] Phase 2: Facilitator sign-off workflow with email notifications — deferred to Phase 2 roadmap
+- [x] Phase 2: Assessment invitation links for external assessors — deferred to Phase 2 roadmap
+- [x] Phase 3: File upload evidence (S3) — removed by design decision (lightweight evidence reference used instead)
+- [x] Phase 3: Custom assessment templates (admin template builder) — deferred to Phase 2 roadmap
+- [x] Phase 3: Benchmark comparisons across organisations — deferred to Phase 2 roadmap

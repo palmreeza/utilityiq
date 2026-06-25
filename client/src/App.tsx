@@ -39,15 +39,15 @@ function Router() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider defaultTheme="dark">
+      <ThemeProvider defaultTheme="light">
         <TooltipProvider>
           <Toaster
-            theme="dark"
+            theme="light"
             toastOptions={{
               style: {
-                background: "oklch(0.16 0.012 240)",
-                border: "1px solid oklch(0.22 0.015 240)",
-                color: "oklch(0.96 0.005 240)",
+                background: "#ffffff",
+                border: "1px solid #d8d8d8",
+                color: "#252525",
               },
             }}
           />

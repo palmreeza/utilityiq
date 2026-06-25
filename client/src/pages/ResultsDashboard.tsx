@@ -73,12 +73,12 @@ export default function ResultsDashboard() {
         <div className="flex items-start justify-between mb-6">
           <div>
             <button onClick={() => navigate(`/assessment/${assessmentId}/workspace`)}
-              className="flex items-center gap-1 text-xs mb-2 hover:text-amber-400 transition-colors"
-              style={{ color: "oklch(0.50 0.01 240)" }}>
+              className="flex items-center gap-1 text-xs mb-2 hover:text-red-600 transition-colors"
+              style={{ color: "#727272" }}>
               <ArrowLeft className="w-3 h-3" /> Back to Workspace
             </button>
             <h1 className="font-display text-2xl font-bold mb-1">Results Dashboard</h1>
-            <p style={{ color: "oklch(0.60 0.01 240)" }}>{assessment?.name}</p>
+            <p style={{ color: "#727272" }}>{assessment?.name}</p>
           </div>
           <div className="flex gap-2">
             <Button size="sm" variant="outline" onClick={() => calculateMutation.mutate({ assessmentId })}
@@ -88,7 +88,7 @@ export default function ResultsDashboard() {
             </Button>
             <Button size="sm" onClick={() => generateRoadmap.mutate({ assessmentId })}
               disabled={generateRoadmap.isPending || !snapshot} className="gap-1 text-xs"
-              style={{ background: "oklch(0.78 0.18 75)", color: "oklch(0.10 0.01 240)" }}>
+              style={{ background: "#e2232a", color: "#1e3640" }}>
               <Map className="w-3 h-3" />
               {generateRoadmap.isPending ? "Generating…" : "Generate Roadmap"}
             </Button>
@@ -101,13 +101,13 @@ export default function ResultsDashboard() {
 
         {!snapshot ? (
           <div className="card-base p-16 text-center">
-            <TrendingUp className="w-12 h-12 mx-auto mb-4" style={{ color: "oklch(0.35 0.01 240)" }} />
+            <TrendingUp className="w-12 h-12 mx-auto mb-4" style={{ color: "#c9c9c9" }} />
             <h3 className="font-semibold mb-2">No results yet</h3>
-            <p className="text-sm mb-6" style={{ color: "oklch(0.60 0.01 240)" }}>
+            <p className="text-sm mb-6" style={{ color: "#727272" }}>
               Complete scoring in the workspace, then calculate results to see your maturity dashboard.
             </p>
             <Button onClick={() => calculateMutation.mutate({ assessmentId })} disabled={calculateMutation.isPending}
-              style={{ background: "oklch(0.78 0.18 75)", color: "oklch(0.10 0.01 240)" }}>
+              style={{ background: "#e2232a", color: "#1e3640" }}>
               {calculateMutation.isPending ? "Calculating…" : "Calculate Results Now"}
             </Button>
           </div>
@@ -116,34 +116,34 @@ export default function ResultsDashboard() {
             {/* KPI row */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
               <div className="stat-card">
-                <div className="text-xs mb-2" style={{ color: "oklch(0.50 0.01 240)" }}>OVERALL SCORE</div>
-                <div className="font-display text-3xl font-bold" style={{ color: "oklch(0.78 0.18 75)" }}>
+                <div className="text-xs mb-2" style={{ color: "#727272" }}>OVERALL SCORE</div>
+                <div className="font-display text-3xl font-bold" style={{ color: "#e2232a" }}>
                   {(snapshot.overallScore as number ?? 0).toFixed(2)}
-                  <span className="text-base font-normal ml-1" style={{ color: "oklch(0.50 0.01 240)" }}>/5</span>
+                  <span className="text-base font-normal ml-1" style={{ color: "#727272" }}>/5</span>
                 </div>
-                <div className="text-xs mt-1" style={{ color: "oklch(0.60 0.01 240)" }}>
+                <div className="text-xs mt-1" style={{ color: "#727272" }}>
                   {MATURITY_LABELS[Math.round(snapshot.overallScore as number)] ?? "—"}
                 </div>
               </div>
               <div className="stat-card">
-                <div className="text-xs mb-2" style={{ color: "oklch(0.50 0.01 240)" }}>TARGET SCORE</div>
-                <div className="font-display text-3xl font-bold" style={{ color: "oklch(0.62 0.16 220)" }}>
+                <div className="text-xs mb-2" style={{ color: "#727272" }}>TARGET SCORE</div>
+                <div className="font-display text-3xl font-bold" style={{ color: "#1e3640" }}>
                   {(snapshot.overallTargetScore as number ?? 0).toFixed(2)}
-                  <span className="text-base font-normal ml-1" style={{ color: "oklch(0.50 0.01 240)" }}>/5</span>
+                  <span className="text-base font-normal ml-1" style={{ color: "#727272" }}>/5</span>
                 </div>
-                <div className="text-xs mt-1" style={{ color: "oklch(0.60 0.01 240)" }}>
+                <div className="text-xs mt-1" style={{ color: "#727272" }}>
                   {MATURITY_LABELS[Math.round(snapshot.overallTargetScore as number)] ?? "—"}
                 </div>
               </div>
               <div className="stat-card">
-                <div className="text-xs mb-2" style={{ color: "oklch(0.50 0.01 240)" }}>MATURITY GAP</div>
-                <div className="font-display text-3xl font-bold" style={{ color: "oklch(0.55 0.22 25)" }}>
+                <div className="text-xs mb-2" style={{ color: "#727272" }}>MATURITY GAP</div>
+                <div className="font-display text-3xl font-bold" style={{ color: "#e2232a" }}>
                   {((snapshot.overallTargetScore as number ?? 0) - (snapshot.overallScore as number ?? 0)).toFixed(2)}
                 </div>
-                <div className="text-xs mt-1" style={{ color: "oklch(0.60 0.01 240)" }}>points to close</div>
+                <div className="text-xs mt-1" style={{ color: "#727272" }}>points to close</div>
               </div>
               <div className="stat-card" style={emsInfo ? { borderColor: `${emsInfo.color}40` } : {}}>
-                <div className="text-xs mb-2" style={{ color: "oklch(0.50 0.01 240)" }}>EMS LEVEL</div>
+                <div className="text-xs mb-2" style={{ color: "#727272" }}>EMS LEVEL</div>
                 {emsInfo ? (
                   <>
                     <div className="font-display text-3xl font-bold" style={{ color: emsInfo.color }}>
@@ -152,21 +152,21 @@ export default function ResultsDashboard() {
                     <div className="text-xs mt-1" style={{ color: emsInfo.color }}>{emsInfo.label} — {emsInfo.description}</div>
                   </>
                 ) : (
-                  <div className="font-display text-3xl font-bold" style={{ color: "oklch(0.50 0.01 240)" }}>—</div>
+                  <div className="font-display text-3xl font-bold" style={{ color: "#727272" }}>—</div>
                 )}
               </div>
             </div>
 
             {/* Tabs */}
-            <div className="flex gap-1 mb-6 p-1 rounded-xl w-fit" style={{ background: "oklch(0.13 0.01 240)" }}>
+            <div className="flex gap-1 mb-6 p-1 rounded-xl w-fit" style={{ background: "#f0f0f0" }}>
               {tabs.map((tab) => (
                 <button key={tab.id} onClick={() => setActiveTab(tab.id)}
                   className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-150"
                   style={activeTab === tab.id ? {
-                    background: "oklch(0.78 0.18 75)",
-                    color: "oklch(0.10 0.01 240)",
+                    background: "#e2232a",
+                    color: "#1e3640",
                   } : {
-                    color: "oklch(0.60 0.01 240)",
+                    color: "#727272",
                   }}>
                   {tab.label}
                 </button>
@@ -181,12 +181,12 @@ export default function ResultsDashboard() {
                   <h3 className="font-semibold mb-4">Maturity Radar</h3>
                   <ResponsiveContainer width="100%" height={320}>
                     <RadarChart data={radarData}>
-                      <PolarGrid stroke="oklch(0.22 0.015 240)" />
-                      <PolarAngleAxis dataKey="domain" tick={{ fill: "oklch(0.60 0.01 240)", fontSize: 11 }} />
+                      <PolarGrid stroke="#d8d8d8" />
+                      <PolarAngleAxis dataKey="domain" tick={{ fill: "#727272", fontSize: 11 }} />
                       <Radar name="Current" dataKey="current" stroke="#FFC000" fill="#FFC000" fillOpacity={0.15} strokeWidth={2} />
                       <Radar name="Target" dataKey="target" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.08} strokeWidth={2} strokeDasharray="4 4" />
-                      <Legend wrapperStyle={{ color: "oklch(0.60 0.01 240)", fontSize: 12 }} />
-                      <Tooltip contentStyle={{ background: "oklch(0.16 0.012 240)", border: "1px solid oklch(0.22 0.015 240)", borderRadius: 8, color: "oklch(0.96 0.005 240)" }} />
+                      <Legend wrapperStyle={{ color: "#727272", fontSize: 12 }} />
+                      <Tooltip contentStyle={{ background: "#e8e8e8", border: "1px solid #d8d8d8", borderRadius: 8, color: "#252525" }} />
                     </RadarChart>
                   </ResponsiveContainer>
                 </div>
@@ -201,18 +201,18 @@ export default function ResultsDashboard() {
                       return (
                         <div key={lvl} className="flex items-center gap-3 p-3 rounded-lg transition-all"
                           style={{
-                            background: isCurrent ? `${info.color}15` : "oklch(0.13 0.01 240)",
-                            border: `1px solid ${isCurrent ? `${info.color}40` : "oklch(0.22 0.015 240)"}`,
+                            background: isCurrent ? `${info.color}15` : "#f0f0f0",
+                            border: `1px solid ${isCurrent ? `${info.color}40` : "#d8d8d8"}`,
                           }}>
                           <div className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0"
-                            style={{ background: info.color, color: "#0D0F14" }}>
+                            style={{ background: info.color, color: "#ffffff" }}>
                             {level}
                           </div>
                           <div className="flex-1">
-                            <div className="text-sm font-medium" style={{ color: isCurrent ? info.color : "oklch(0.70 0.01 240)" }}>
+                            <div className="text-sm font-medium" style={{ color: isCurrent ? info.color : "#252525" }}>
                               {info.label}
                             </div>
-                            <div className="text-xs" style={{ color: "oklch(0.50 0.01 240)" }}>{info.description}</div>
+                            <div className="text-xs" style={{ color: "#727272" }}>{info.description}</div>
                           </div>
                           {isCurrent && (
                             <span className="text-xs px-2 py-0.5 rounded-full font-medium"
@@ -233,11 +233,11 @@ export default function ResultsDashboard() {
                 <h3 className="font-semibold mb-4">Domain Score Comparison</h3>
                 <ResponsiveContainer width="100%" height={360}>
                   <BarChart data={barData} margin={{ top: 5, right: 20, left: 0, bottom: 60 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="oklch(0.22 0.015 240)" />
-                    <XAxis dataKey="name" tick={{ fill: "oklch(0.60 0.01 240)", fontSize: 11 }} angle={-30} textAnchor="end" />
-                    <YAxis domain={[0, 5]} tick={{ fill: "oklch(0.60 0.01 240)", fontSize: 11 }} />
-                    <Tooltip contentStyle={{ background: "oklch(0.16 0.012 240)", border: "1px solid oklch(0.22 0.015 240)", borderRadius: 8, color: "oklch(0.96 0.005 240)" }} />
-                    <Legend wrapperStyle={{ color: "oklch(0.60 0.01 240)", fontSize: 12 }} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#d8d8d8" />
+                    <XAxis dataKey="name" tick={{ fill: "#727272", fontSize: 11 }} angle={-30} textAnchor="end" />
+                    <YAxis domain={[0, 5]} tick={{ fill: "#727272", fontSize: 11 }} />
+                    <Tooltip contentStyle={{ background: "#e8e8e8", border: "1px solid #d8d8d8", borderRadius: 8, color: "#252525" }} />
+                    <Legend wrapperStyle={{ color: "#727272", fontSize: 12 }} />
                     <Bar dataKey="current" name="Current" radius={[4, 4, 0, 0]}>
                       {barData.map((entry, i) => <Cell key={i} fill={entry.color} fillOpacity={0.8} />)}
                     </Bar>
@@ -255,13 +255,13 @@ export default function ResultsDashboard() {
                       <div className="font-medium text-sm">{d.name}</div>
                       <div className="flex items-center gap-3 text-xs">
                         <span style={{ color: d.color }}>Current: {d.current}</span>
-                        <span style={{ color: "oklch(0.62 0.16 220)" }}>Target: {d.target}</span>
+                        <span style={{ color: "#1e3640" }}>Target: {d.target}</span>
                         <span className="font-semibold" style={{ color: d.gap > 1.5 ? "#ef4444" : d.gap > 0.5 ? "#f97316" : "#22c55e" }}>
                           Gap: {d.gap > 0 ? `+${d.gap}` : d.gap}
                         </span>
                       </div>
                     </div>
-                    <div className="relative h-3 rounded-full overflow-hidden" style={{ background: "oklch(0.16 0.012 240)" }}>
+                    <div className="relative h-3 rounded-full overflow-hidden" style={{ background: "#e8e8e8" }}>
                       <div className="absolute inset-y-0 left-0 rounded-full transition-all duration-500"
                         style={{ width: `${(d.current / 5) * 100}%`, background: d.color }} />
                       <div className="absolute inset-y-0 left-0 rounded-full opacity-30"
@@ -287,12 +287,12 @@ export default function ResultsDashboard() {
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr style={{ borderBottom: "1px solid oklch(0.22 0.015 240)" }}>
-                        <th className="text-left py-2 pr-4 text-xs font-medium" style={{ color: "oklch(0.50 0.01 240)" }}>Capability</th>
-                        <th className="text-center py-2 px-3 text-xs font-medium" style={{ color: "oklch(0.50 0.01 240)" }}>Current</th>
-                        <th className="text-center py-2 px-3 text-xs font-medium" style={{ color: "oklch(0.50 0.01 240)" }}>Target</th>
-                        <th className="text-center py-2 px-3 text-xs font-medium" style={{ color: "oklch(0.50 0.01 240)" }}>Gap</th>
-                        <th className="text-center py-2 px-3 text-xs font-medium" style={{ color: "oklch(0.50 0.01 240)" }}>Variance</th>
+                      <tr style={{ borderBottom: "1px solid #d8d8d8" }}>
+                        <th className="text-left py-2 pr-4 text-xs font-medium" style={{ color: "#727272" }}>Capability</th>
+                        <th className="text-center py-2 px-3 text-xs font-medium" style={{ color: "#727272" }}>Current</th>
+                        <th className="text-center py-2 px-3 text-xs font-medium" style={{ color: "#727272" }}>Target</th>
+                        <th className="text-center py-2 px-3 text-xs font-medium" style={{ color: "#727272" }}>Gap</th>
+                        <th className="text-center py-2 px-3 text-xs font-medium" style={{ color: "#727272" }}>Variance</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -302,7 +302,7 @@ export default function ResultsDashboard() {
                         const gapColor = gap > 1.5 ? "#ef4444" : gap > 0.5 ? "#f97316" : "#22c55e";
                         const scoreColor = ["", "#ef4444", "#f97316", "#FFC000", "#22c55e", "#3b82f6"][Math.round(cap.currentScore)] ?? "#6b7280";
                         return (
-                          <tr key={cap.capabilityId} style={{ borderBottom: "1px solid oklch(0.16 0.012 240)" }}>
+                          <tr key={cap.capabilityId} style={{ borderBottom: "1px solid #e8e8e8" }}>
                             <td className="py-2 pr-4">
                               <div className="flex items-center gap-2">
                                 {isHighVar && <AlertTriangle className="w-3 h-3 flex-shrink-0" style={{ color: "#f97316" }} />}
@@ -316,7 +316,7 @@ export default function ResultsDashboard() {
                               </span>
                             </td>
                             <td className="text-center py-2 px-3">
-                              <span className="text-xs" style={{ color: "oklch(0.62 0.16 220)" }}>
+                              <span className="text-xs" style={{ color: "#1e3640" }}>
                                 {(cap.targetScore ?? 0).toFixed(1)}
                               </span>
                             </td>

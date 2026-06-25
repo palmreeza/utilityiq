@@ -4,82 +4,89 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ============================================================
-   UTILITY IQ — IOT.nxt Energy Brand Design System
-   Dark theme: deep slate backgrounds, electric amber accent,
-   crimson red brand, clean typography
+   UTILITY IQ — IOT.nxt Official CI Design System
+   Light theme: white base, red #e2232a primary, grey scale,
+   mint #44ebca accent, blue #1e3640 deep
    ============================================================ */
 
 @theme inline {
-  /* Brand Palette */
-  --color-brand-red: oklch(0.48 0.22 25);        /* IOT.nxt #ED1C24 */
-  --color-brand-amber: oklch(0.78 0.18 75);       /* Energy amber #FFC000 */
-  --color-brand-amber-light: oklch(0.88 0.14 75);
-  --color-brand-amber-dark: oklch(0.62 0.18 75);
+  /* ── IOT.nxt Official CI Palette ── */
+  --color-iotnxt-red:        #e2232a;
+  --color-iotnxt-dark-red:   #8c191c;
+  --color-iotnxt-grey:       #727272;
+  --color-iotnxt-dark-grey:  #252525;
+  --color-iotnxt-light-grey: #c9c9c9;
+  --color-iotnxt-mint:       #44ebca;
+  --color-iotnxt-blue:       #1e3640;
+  --color-iotnxt-white:      #ffffff;
 
-  /* Background scale — deep slate */
-  --color-bg-base: oklch(0.10 0.01 240);          /* #0D0F14 deepest */
-  --color-bg-surface: oklch(0.13 0.01 240);       /* #111318 card bg */
-  --color-bg-elevated: oklch(0.16 0.012 240);     /* #161A22 elevated */
-  --color-bg-overlay: oklch(0.19 0.012 240);      /* #1C2130 overlay */
-  --color-bg-border: oklch(0.22 0.015 240);       /* subtle border */
+  /* ── Background scale — light ── */
+  --color-bg-base:     #f5f5f5;   /* page background */
+  --color-bg-surface:  #ffffff;   /* card / panel */
+  --color-bg-elevated: #f0f0f0;   /* slightly raised */
+  --color-bg-overlay:  #e8e8e8;   /* hover / overlay */
+  --color-bg-border:   #d8d8d8;   /* subtle border */
+  --color-bg-sidebar:  #1e3640;   /* deep blue sidebar */
 
-  /* Text scale */
-  --color-text-primary: oklch(0.96 0.005 240);    /* near white */
-  --color-text-secondary: oklch(0.70 0.01 240);   /* muted */
-  --color-text-tertiary: oklch(0.50 0.01 240);    /* very muted */
-  --color-text-disabled: oklch(0.35 0.008 240);
+  /* ── Text scale ── */
+  --color-text-primary:   #252525;  /* dark grey */
+  --color-text-secondary: #727272;  /* mid grey */
+  --color-text-tertiary:  #a0a0a0;  /* light grey */
+  --color-text-disabled:  #c9c9c9;
+  --color-text-on-dark:   #ffffff;
+  --color-text-on-red:    #ffffff;
 
-  /* Semantic colours */
-  --color-success: oklch(0.65 0.18 145);
-  --color-warning: oklch(0.78 0.18 75);
-  --color-danger: oklch(0.55 0.22 25);
-  --color-info: oklch(0.62 0.16 220);
+  /* ── Semantic colours ── */
+  --color-success: #1a9e6e;
+  --color-warning: #d97706;
+  --color-danger:  #e2232a;
+  --color-info:    #1e3640;
 
-  /* Maturity level colours */
-  --color-level-1: oklch(0.55 0.22 25);           /* red — Initial */
-  --color-level-2: oklch(0.65 0.20 45);           /* orange — Developing */
-  --color-level-3: oklch(0.78 0.18 75);           /* amber — Defined */
-  --color-level-4: oklch(0.68 0.18 145);          /* green — Managed */
-  --color-level-5: oklch(0.62 0.16 220);          /* blue — Optimising */
+  /* ── Maturity level colours ── */
+  --color-level-1: #e2232a;   /* red   — Initial */
+  --color-level-2: #d97706;   /* amber — Developing */
+  --color-level-3: #ca8a04;   /* gold  — Defined */
+  --color-level-4: #1a9e6e;   /* green — Managed */
+  --color-level-5: #1e3640;   /* blue  — Optimising */
 
-  /* Shadcn/Tailwind semantic tokens — dark theme */
-  --color-background: oklch(0.10 0.01 240);
-  --color-foreground: oklch(0.96 0.005 240);
-  --color-card: oklch(0.13 0.01 240);
-  --color-card-foreground: oklch(0.96 0.005 240);
-  --color-popover: oklch(0.16 0.012 240);
-  --color-popover-foreground: oklch(0.96 0.005 240);
-  --color-primary: oklch(0.78 0.18 75);           /* amber as primary */
-  --color-primary-foreground: oklch(0.10 0.01 240);
-  --color-secondary: oklch(0.19 0.012 240);
-  --color-secondary-foreground: oklch(0.96 0.005 240);
-  --color-muted: oklch(0.16 0.012 240);
-  --color-muted-foreground: oklch(0.60 0.01 240);
-  --color-accent: oklch(0.19 0.012 240);
-  --color-accent-foreground: oklch(0.96 0.005 240);
-  --color-destructive: oklch(0.55 0.22 25);
-  --color-destructive-foreground: oklch(0.96 0.005 240);
-  --color-border: oklch(0.22 0.015 240);
-  --color-input: oklch(0.19 0.012 240);
-  --color-ring: oklch(0.78 0.18 75);
+  /* ── Shadcn/Tailwind semantic tokens — light theme ── */
+  --color-background:            #f5f5f5;
+  --color-foreground:            #252525;
+  --color-card:                  #ffffff;
+  --color-card-foreground:       #252525;
+  --color-popover:               #ffffff;
+  --color-popover-foreground:    #252525;
+  --color-primary:               #e2232a;
+  --color-primary-foreground:    #ffffff;
+  --color-secondary:             #f0f0f0;
+  --color-secondary-foreground:  #252525;
+  --color-muted:                 #f0f0f0;
+  --color-muted-foreground:      #727272;
+  --color-accent:                #44ebca;
+  --color-accent-foreground:     #1e3640;
+  --color-destructive:           #e2232a;
+  --color-destructive-foreground:#ffffff;
+  --color-border:                #d8d8d8;
+  --color-input:                 #f0f0f0;
+  --color-ring:                  #e2232a;
 
-  /* Radius */
-  --radius: 0.5rem;
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
+  /* ── Radius ── */
+  --radius:     0.5rem;
+  --radius-sm:  0.25rem;
+  --radius-md:  0.5rem;
+  --radius-lg:  0.75rem;
+  --radius-xl:  1rem;
   --radius-2xl: 1.5rem;
 
-  /* Shadows */
-  --shadow-card: 0 1px 3px oklch(0 0 0 / 0.4), 0 4px 16px oklch(0 0 0 / 0.3);
-  --shadow-elevated: 0 4px 24px oklch(0 0 0 / 0.5), 0 1px 4px oklch(0 0 0 / 0.3);
-  --shadow-amber-glow: 0 0 24px oklch(0.78 0.18 75 / 0.15);
+  /* ── Shadows ── */
+  --shadow-card:    0 1px 3px rgba(37,37,37,0.08), 0 4px 16px rgba(37,37,37,0.06);
+  --shadow-elevated:0 4px 24px rgba(37,37,37,0.12), 0 1px 4px rgba(37,37,37,0.06);
+  --shadow-red-glow:0 0 24px rgba(226,35,42,0.15);
 
-  /* Typography */
-  --font-sans: "Inter", "Space Grotesk", system-ui, sans-serif;
+  /* ── Typography ── */
+  --font-sans:    "Inter", system-ui, sans-serif;
   --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --font-mono:    "JetBrains Mono", "Fira Code", monospace;
 }
 
 /* ============================================================
@@ -119,11 +126,11 @@
     background: var(--color-bg-border);
     border-radius: 3px;
   }
-  ::-webkit-scrollbar-thumb:hover { background: oklch(0.30 0.015 240); }
+  ::-webkit-scrollbar-thumb:hover { background: #b0b0b0; }
 
   /* Selection */
   ::selection {
-    background: oklch(0.78 0.18 75 / 0.25);
+    background: rgba(226, 35, 42, 0.15);
     color: var(--color-text-primary);
   }
 }
@@ -142,60 +149,60 @@
   }
 
   .card-elevated {
-    background: var(--color-bg-elevated);
+    background: var(--color-bg-surface);
     border: 1px solid var(--color-bg-border);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-elevated);
   }
 
-  /* ── Amber glow accent ── */
-  .amber-glow {
-    box-shadow: var(--shadow-amber-glow);
+  /* ── Red glow accent ── */
+  .red-glow {
+    box-shadow: var(--shadow-red-glow);
   }
 
   /* ── Gradient text ── */
   .gradient-text {
-    background: linear-gradient(135deg, oklch(0.78 0.18 75), oklch(0.88 0.14 75));
+    background: linear-gradient(135deg, #e2232a, #8c191c);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .gradient-text-red {
-    background: linear-gradient(135deg, oklch(0.60 0.22 25), oklch(0.70 0.20 35));
+  .gradient-text-mint {
+    background: linear-gradient(135deg, #44ebca, #1e3640);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* ── Status badge ── */
+  /* ── Status badges ── */
   .status-draft {
-    background: oklch(0.35 0.01 240 / 0.4);
-    color: oklch(0.70 0.01 240);
-    border: 1px solid oklch(0.35 0.01 240);
+    background: #f0f0f0;
+    color: #727272;
+    border: 1px solid #d8d8d8;
   }
   .status-in-progress {
-    background: oklch(0.78 0.18 75 / 0.15);
-    color: oklch(0.78 0.18 75);
-    border: 1px solid oklch(0.78 0.18 75 / 0.4);
+    background: rgba(226, 35, 42, 0.08);
+    color: #e2232a;
+    border: 1px solid rgba(226, 35, 42, 0.25);
   }
   .status-under-review {
-    background: oklch(0.62 0.16 220 / 0.15);
-    color: oklch(0.72 0.14 220);
-    border: 1px solid oklch(0.62 0.16 220 / 0.4);
+    background: rgba(30, 54, 64, 0.08);
+    color: #1e3640;
+    border: 1px solid rgba(30, 54, 64, 0.25);
   }
   .status-approved {
-    background: oklch(0.65 0.18 145 / 0.15);
-    color: oklch(0.72 0.16 145);
-    border: 1px solid oklch(0.65 0.18 145 / 0.4);
+    background: rgba(26, 158, 110, 0.08);
+    color: #1a9e6e;
+    border: 1px solid rgba(26, 158, 110, 0.25);
   }
 
   /* ── Maturity level pills ── */
-  .level-1 { background: oklch(0.55 0.22 25 / 0.2); color: oklch(0.70 0.20 25); border: 1px solid oklch(0.55 0.22 25 / 0.4); }
-  .level-2 { background: oklch(0.65 0.20 45 / 0.2); color: oklch(0.78 0.18 45); border: 1px solid oklch(0.65 0.20 45 / 0.4); }
-  .level-3 { background: oklch(0.78 0.18 75 / 0.2); color: oklch(0.88 0.16 75); border: 1px solid oklch(0.78 0.18 75 / 0.4); }
-  .level-4 { background: oklch(0.65 0.18 145 / 0.2); color: oklch(0.75 0.16 145); border: 1px solid oklch(0.65 0.18 145 / 0.4); }
-  .level-5 { background: oklch(0.62 0.16 220 / 0.2); color: oklch(0.72 0.14 220); border: 1px solid oklch(0.62 0.16 220 / 0.4); }
+  .level-1 { background: rgba(226,35,42,0.10);  color: #c01e24; border: 1px solid rgba(226,35,42,0.25); }
+  .level-2 { background: rgba(217,119,6,0.10);  color: #b45309; border: 1px solid rgba(217,119,6,0.25); }
+  .level-3 { background: rgba(202,138,4,0.10);  color: #92400e; border: 1px solid rgba(202,138,4,0.25); }
+  .level-4 { background: rgba(26,158,110,0.10); color: #0f7a55; border: 1px solid rgba(26,158,110,0.25); }
+  .level-5 { background: rgba(30,54,64,0.10);   color: #1e3640; border: 1px solid rgba(30,54,64,0.25); }
 
   /* ── Sidebar nav item ── */
   .nav-item {
@@ -206,19 +213,19 @@
     border-radius: var(--radius-md);
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--color-text-secondary);
+    color: rgba(255,255,255,0.65);
     transition: all 160ms cubic-bezier(0.23, 1, 0.32, 1);
     cursor: pointer;
     text-decoration: none;
   }
   .nav-item:hover {
-    background: var(--color-bg-elevated);
-    color: var(--color-text-primary);
+    background: rgba(255,255,255,0.08);
+    color: #ffffff;
   }
   .nav-item.active {
-    background: oklch(0.78 0.18 75 / 0.12);
-    color: oklch(0.88 0.16 75);
-    border-left: 2px solid oklch(0.78 0.18 75);
+    background: rgba(226, 35, 42, 0.20);
+    color: #ffffff;
+    border-left: 3px solid #e2232a;
   }
 
   /* ── Section divider ── */
@@ -236,8 +243,8 @@
     transition: border-color 200ms ease, box-shadow 200ms ease;
   }
   .stat-card:hover {
-    border-color: oklch(0.78 0.18 75 / 0.3);
-    box-shadow: var(--shadow-amber-glow);
+    border-color: rgba(226, 35, 42, 0.3);
+    box-shadow: var(--shadow-red-glow);
   }
 
   /* ── Score input ── */
@@ -257,19 +264,20 @@
     justify-content: center;
   }
   .score-button:hover {
-    border-color: oklch(0.78 0.18 75 / 0.5);
+    border-color: rgba(226, 35, 42, 0.4);
     color: var(--color-text-primary);
+    background: rgba(226, 35, 42, 0.05);
   }
   .score-button.selected-current {
-    background: oklch(0.78 0.18 75 / 0.2);
-    border-color: oklch(0.78 0.18 75);
-    color: oklch(0.88 0.16 75);
-    box-shadow: 0 0 12px oklch(0.78 0.18 75 / 0.2);
+    background: rgba(226, 35, 42, 0.12);
+    border-color: #e2232a;
+    color: #c01e24;
+    box-shadow: 0 0 10px rgba(226, 35, 42, 0.15);
   }
   .score-button.selected-target {
-    background: oklch(0.62 0.16 220 / 0.2);
-    border-color: oklch(0.62 0.16 220);
-    color: oklch(0.72 0.14 220);
+    background: rgba(30, 54, 64, 0.10);
+    border-color: #1e3640;
+    color: #1e3640;
   }
 
   /* ── Progress bar ── */
@@ -279,22 +287,22 @@
     border-radius: 3px;
     overflow: hidden;
   }
-  .progress-fill-amber {
+  .progress-fill-red {
     height: 100%;
-    background: linear-gradient(90deg, oklch(0.78 0.18 75), oklch(0.88 0.14 75));
+    background: linear-gradient(90deg, #e2232a, #8c191c);
     border-radius: 3px;
     transition: width 600ms cubic-bezier(0.23, 1, 0.32, 1);
   }
   .progress-fill-blue {
     height: 100%;
-    background: linear-gradient(90deg, oklch(0.52 0.16 220), oklch(0.62 0.16 220));
+    background: linear-gradient(90deg, #1e3640, #44ebca);
     border-radius: 3px;
     transition: width 600ms cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   /* ── Print styles ── */
   @media print {
-    body { background: white !important; color: black !important; }
+    body { background: white !important; color: #252525 !important; }
     .no-print { display: none !important; }
     .print-break { page-break-after: always; }
     .card-base, .card-elevated {
@@ -302,6 +310,9 @@
       border: 1px solid #e5e7eb !important;
       box-shadow: none !important;
     }
+    /* sidebar hidden in print */
+    aside { display: none !important; }
+    main { margin-left: 0 !important; }
   }
 }
 
@@ -311,14 +322,16 @@
 @layer utilities {
   .flex { min-width: 0; min-height: 0; }
 
-  .text-brand-amber { color: oklch(0.78 0.18 75); }
-  .text-brand-red { color: oklch(0.55 0.22 25); }
-  .text-muted { color: var(--color-text-secondary); }
-  .text-faint { color: var(--color-text-tertiary); }
+  .text-iotnxt-red   { color: #e2232a; }
+  .text-iotnxt-mint  { color: #44ebca; }
+  .text-iotnxt-blue  { color: #1e3640; }
+  .text-muted        { color: var(--color-text-secondary); }
+  .text-faint        { color: var(--color-text-tertiary); }
 
-  .bg-surface { background: var(--color-bg-surface); }
+  .bg-surface  { background: var(--color-bg-surface); }
   .bg-elevated { background: var(--color-bg-elevated); }
-  .bg-overlay { background: var(--color-bg-overlay); }
+  .bg-overlay  { background: var(--color-bg-overlay); }
+  .bg-sidebar  { background: var(--color-bg-sidebar); }
 
   .border-subtle { border-color: var(--color-bg-border); }
 

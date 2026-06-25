@@ -123,7 +123,7 @@ export default function AssessmentWorkspace() {
     return (
       <AppLayout>
         <div className="p-8 flex items-center justify-center">
-          <div className="w-8 h-8 rounded-full border-2 border-amber-400 border-t-transparent animate-spin" />
+          <div className="w-8 h-8 rounded-full border-2 border-red-600 border-t-transparent animate-spin" />
         </div>
       </AppLayout>
     );
@@ -144,9 +144,9 @@ export default function AssessmentWorkspace() {
       <div className="flex h-full" style={{ minHeight: "calc(100vh - 56px)" }}>
         {/* Domain sidebar */}
         <div className="w-52 flex-shrink-0 border-r overflow-y-auto"
-          style={{ borderColor: "oklch(0.22 0.015 240)", background: "oklch(0.10 0.01 240)" }}>
+          style={{ borderColor: "#d8d8d8", background: "#1e3640" }}>
           <div className="p-3">
-            <div className="text-xs font-medium mb-3 px-2" style={{ color: "oklch(0.50 0.01 240)" }}>DOMAINS</div>
+            <div className="text-xs font-medium mb-3 px-2" style={{ color: "#727272" }}>DOMAINS</div>
             {template.domains?.map((domain: any) => {
               const domainScored = domain.capabilities.filter((c: any) => getScore(c.id).currentScore !== undefined).length;
               const isActive = (activeDomainId ?? template.domains[0]?.id) === domain.id;
@@ -157,7 +157,7 @@ export default function AssessmentWorkspace() {
                   <DomainIcon />
                   <div className="flex-1 min-w-0 text-left">
                     <div className="truncate text-xs">{domain.name}</div>
-                    <div className="text-xs" style={{ color: "oklch(0.50 0.01 240)" }}>
+                    <div className="text-xs" style={{ color: "#727272" }}>
                       {domainScored}/{domain.capabilities.length}
                     </div>
                   </div>
@@ -174,8 +174,8 @@ export default function AssessmentWorkspace() {
             <div className="flex items-start justify-between mb-6">
               <div>
                 <button onClick={() => navigate(-1 as any)}
-                  className="flex items-center gap-1 text-xs mb-2 hover:text-amber-400 transition-colors"
-                  style={{ color: "oklch(0.50 0.01 240)" }}>
+                  className="flex items-center gap-1 text-xs mb-2 hover:text-red-600 transition-colors"
+                  style={{ color: "#727272" }}>
                   <ArrowLeft className="w-3 h-3" /> Back
                 </button>
                 <h1 className="font-display text-xl font-bold mb-1">{assessment.name}</h1>
@@ -183,7 +183,7 @@ export default function AssessmentWorkspace() {
                   <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${statusCfg?.className}`}>
                     {statusCfg?.label}
                   </span>
-                  <span className="text-xs" style={{ color: "oklch(0.50 0.01 240)" }}>
+                  <span className="text-xs" style={{ color: "#727272" }}>
                     {completionPct}% complete ({scoredCount}/{totalCount} capabilities)
                   </span>
                 </div>
@@ -213,13 +213,13 @@ export default function AssessmentWorkspace() {
 
             {/* Domain header */}
             {activeDomain && (
-              <div className="mb-6 p-4 rounded-xl border" style={{ background: "oklch(0.13 0.01 240)", borderColor: "oklch(0.22 0.015 240)" }}>
+              <div className="mb-6 p-4 rounded-xl border" style={{ background: "#f0f0f0", borderColor: "#d8d8d8" }}>
                 <h2 className="font-display text-lg font-semibold mb-1">{activeDomain.name}</h2>
-                <p className="text-sm" style={{ color: "oklch(0.60 0.01 240)" }}>{activeDomain.description}</p>
+                <p className="text-sm" style={{ color: "#727272" }}>{activeDomain.description}</p>
                 {activeDomain.standardsAlignment && (
                   <div className="flex items-center gap-2 mt-2">
-                    <Shield className="w-3 h-3" style={{ color: "oklch(0.62 0.16 220)" }} />
-                    <span className="text-xs" style={{ color: "oklch(0.62 0.16 220)" }}>
+                    <Shield className="w-3 h-3" style={{ color: "#1e3640" }} />
+                    <span className="text-xs" style={{ color: "#1e3640" }}>
                       {activeDomain.standardsAlignment}
                     </span>
                   </div>
@@ -243,14 +243,14 @@ export default function AssessmentWorkspace() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
                           {isScored ? (
-                            <CheckCircle2 className="w-4 h-4 flex-shrink-0" style={{ color: "oklch(0.65 0.18 145)" }} />
+                            <CheckCircle2 className="w-4 h-4 flex-shrink-0" style={{ color: "#1a9e6e" }} />
                           ) : (
-                            <div className="w-4 h-4 rounded-full border-2 flex-shrink-0" style={{ borderColor: "oklch(0.35 0.01 240)" }} />
+                            <div className="w-4 h-4 rounded-full border-2 flex-shrink-0" style={{ borderColor: "#c9c9c9" }} />
                           )}
                           <span className="font-medium text-sm">{cap.name}</span>
                         </div>
                         {cap.description && (
-                          <p className="text-xs ml-6" style={{ color: "oklch(0.50 0.01 240)" }}>{cap.description}</p>
+                          <p className="text-xs ml-6" style={{ color: "#727272" }}>{cap.description}</p>
                         )}
                       </div>
                       <div className="flex items-center gap-3 flex-shrink-0">
@@ -272,29 +272,29 @@ export default function AssessmentWorkspace() {
                             </span>
                           </div>
                         )}
-                        {isExpanded ? <ChevronDown className="w-4 h-4" style={{ color: "oklch(0.50 0.01 240)" }} />
-                          : <ChevronRight className="w-4 h-4" style={{ color: "oklch(0.50 0.01 240)" }} />}
+                        {isExpanded ? <ChevronDown className="w-4 h-4" style={{ color: "#727272" }} />
+                          : <ChevronRight className="w-4 h-4" style={{ color: "#727272" }} />}
                       </div>
                     </button>
 
                     {/* Expanded scoring panel */}
                     {isExpanded && (
-                      <div className="border-t p-5 space-y-5" style={{ borderColor: "oklch(0.22 0.015 240)", background: "oklch(0.11 0.01 240)" }}>
+                      <div className="border-t p-5 space-y-5" style={{ borderColor: "#d8d8d8", background: "#f5f5f5" }}>
                         {/* Level descriptors */}
                         {cap.levelDescriptors && cap.levelDescriptors.length > 0 && (
                           <div>
-                            <div className="text-xs font-medium mb-3" style={{ color: "oklch(0.50 0.01 240)" }}>MATURITY LEVEL DESCRIPTORS</div>
+                            <div className="text-xs font-medium mb-3" style={{ color: "#727272" }}>MATURITY LEVEL DESCRIPTORS</div>
                             <div className="grid gap-2">
                               {cap.levelDescriptors.map((ld: any) => (
                                 <div key={ld.id} className="flex gap-3 p-3 rounded-lg"
-                                  style={{ background: "oklch(0.13 0.01 240)" }}>
+                                  style={{ background: "#f0f0f0" }}>
                                   <div className="w-6 h-6 rounded flex items-center justify-center text-xs font-bold flex-shrink-0"
                                     style={{ background: `${LEVEL_COLORS[ld.level]}20`, color: LEVEL_COLORS[ld.level] }}>
                                     {ld.level}
                                   </div>
                                   <div>
                                     <div className="text-xs font-medium mb-0.5" style={{ color: LEVEL_COLORS[ld.level] }}>{ld.label}</div>
-                                    <div className="text-xs" style={{ color: "oklch(0.60 0.01 240)" }}>{ld.description}</div>
+                                    <div className="text-xs" style={{ color: "#727272" }}>{ld.description}</div>
                                   </div>
                                 </div>
                               ))}
@@ -305,7 +305,7 @@ export default function AssessmentWorkspace() {
                         {/* Score inputs */}
                         <div className="grid md:grid-cols-2 gap-6">
                           <div>
-                            <div className="text-xs font-medium mb-2" style={{ color: "oklch(0.50 0.01 240)" }}>CURRENT MATURITY SCORE</div>
+                            <div className="text-xs font-medium mb-2" style={{ color: "#727272" }}>CURRENT MATURITY SCORE</div>
                             <div className="flex gap-2">
                               {[1, 2, 3, 4, 5].map((level) => (
                                 <ScoreButton key={level} level={level} type="current"
@@ -320,7 +320,7 @@ export default function AssessmentWorkspace() {
                             )}
                           </div>
                           <div>
-                            <div className="text-xs font-medium mb-2" style={{ color: "oklch(0.50 0.01 240)" }}>TARGET MATURITY SCORE</div>
+                            <div className="text-xs font-medium mb-2" style={{ color: "#727272" }}>TARGET MATURITY SCORE</div>
                             <div className="flex gap-2">
                               {[1, 2, 3, 4, 5].map((level) => (
                                 <ScoreButton key={level} level={level} type="target"
@@ -338,19 +338,19 @@ export default function AssessmentWorkspace() {
 
                         {/* Confidence */}
                         <div>
-                          <div className="text-xs font-medium mb-2" style={{ color: "oklch(0.50 0.01 240)" }}>CONFIDENCE LEVEL</div>
+                          <div className="text-xs font-medium mb-2" style={{ color: "#727272" }}>CONFIDENCE LEVEL</div>
                           <div className="flex gap-2">
                             {(["Low", "Medium", "High"] as ConfidenceLevel[]).map((c) => (
                               <button key={c} onClick={() => setLocalScores((prev) => ({ ...prev, [cap.id]: { ...getScore(cap.id), confidence: c } }))}
                                 className="px-3 py-1.5 rounded-lg text-xs font-medium border transition-all"
                                 style={score.confidence === c ? {
-                                  background: "oklch(0.78 0.18 75 / 0.2)",
-                                  borderColor: "oklch(0.78 0.18 75)",
-                                  color: "oklch(0.88 0.16 75)",
+                                  background: "rgba(226,35,42,0.12)",
+                                  borderColor: "#e2232a",
+                                  color: "#e2232a",
                                 } : {
-                                  background: "oklch(0.16 0.012 240)",
-                                  borderColor: "oklch(0.22 0.015 240)",
-                                  color: "oklch(0.60 0.01 240)",
+                                  background: "#e8e8e8",
+                                  borderColor: "#d8d8d8",
+                                  color: "#727272",
                                 }}>
                                 {c}
                               </button>
@@ -360,7 +360,7 @@ export default function AssessmentWorkspace() {
 
                         {/* Justification */}
                         <div>
-                          <div className="text-xs font-medium mb-2" style={{ color: "oklch(0.50 0.01 240)" }}>EVIDENCE JUSTIFICATION</div>
+                          <div className="text-xs font-medium mb-2" style={{ color: "#727272" }}>EVIDENCE JUSTIFICATION</div>
                           <Textarea
                             value={score.justification}
                             onChange={(e) => setLocalScores((prev) => ({ ...prev, [cap.id]: { ...getScore(cap.id), justification: e.target.value } }))}
@@ -370,7 +370,7 @@ export default function AssessmentWorkspace() {
 
                         {/* Document reference */}
                         <div>
-                          <div className="text-xs font-medium mb-2" style={{ color: "oklch(0.50 0.01 240)" }}>DOCUMENT REFERENCE / URL</div>
+                          <div className="text-xs font-medium mb-2" style={{ color: "#727272" }}>DOCUMENT REFERENCE / URL</div>
                           <Input
                             value={score.documentReference}
                             onChange={(e) => setLocalScores((prev) => ({ ...prev, [cap.id]: { ...getScore(cap.id), documentReference: e.target.value } }))}
@@ -390,7 +390,7 @@ export default function AssessmentWorkspace() {
                           </Button>
                           <Button size="sm" onClick={() => handleSave(cap.id, false)}
                             disabled={isSaving || !score.currentScore || !score.targetScore}
-                            className="gap-1 text-xs" style={{ background: "oklch(0.78 0.18 75)", color: "oklch(0.10 0.01 240)" }}>
+                            className="gap-1 text-xs" style={{ background: "#e2232a", color: "#1e3640" }}>
                             <CheckCircle2 className="w-3 h-3" />
                             {isSaving ? "Submitting…" : "Submit Score"}
                           </Button>
@@ -403,7 +403,7 @@ export default function AssessmentWorkspace() {
             </div>
 
             {/* Status actions */}
-            <div className="mt-8 p-4 rounded-xl border" style={{ background: "oklch(0.13 0.01 240)", borderColor: "oklch(0.22 0.015 240)" }}>
+            <div className="mt-8 p-4 rounded-xl border" style={{ background: "#f0f0f0", borderColor: "#d8d8d8" }}>
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-sm font-medium mb-1">Assessment Status</div>
@@ -411,7 +411,7 @@ export default function AssessmentWorkspace() {
                     <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${statusCfg?.className}`}>
                       {statusCfg?.label}
                     </span>
-                    <span className="text-xs" style={{ color: "oklch(0.50 0.01 240)" }}>
+                    <span className="text-xs" style={{ color: "#727272" }}>
                       {completionPct}% scored
                     </span>
                   </div>
@@ -419,19 +419,19 @@ export default function AssessmentWorkspace() {
                 <div className="flex gap-2">
                   {assessment.status === "Draft" && (
                     <Button size="sm" onClick={() => updateStatus.mutate({ id: assessmentId, status: "In-Progress" })}
-                      style={{ background: "oklch(0.78 0.18 75)", color: "oklch(0.10 0.01 240)" }}>
+                      style={{ background: "#e2232a", color: "#1e3640" }}>
                       Start Assessment
                     </Button>
                   )}
                   {assessment.status === "In-Progress" && (
                     <Button size="sm" onClick={() => updateStatus.mutate({ id: assessmentId, status: "Under Review" })}
-                      style={{ background: "oklch(0.62 0.16 220)", color: "white" }}>
+                      style={{ background: "#1e3640", color: "white" }}>
                       Submit for Review
                     </Button>
                   )}
                   {assessment.status === "Under Review" && (
                     <Button size="sm" onClick={() => updateStatus.mutate({ id: assessmentId, status: "Approved" })}
-                      style={{ background: "oklch(0.65 0.18 145)", color: "white" }}>
+                      style={{ background: "#1a9e6e", color: "white" }}>
                       Approve Assessment
                     </Button>
                   )}

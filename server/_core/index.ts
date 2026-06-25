@@ -64,6 +64,15 @@ async function startServer() {
     console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
   }
 
+  // Log which database URL variable was resolved (helps debug Railway deployments)
+  const dbUrl = process.env.DATABASE_URL || process.env.MYSQL_URL || process.env.MYSQL_PRIVATE_URL;
+  if (dbUrl) {
+    const masked = dbUrl.replace(/:([^@]+)@/, ':***@');
+    console.log(`[Database] Connected via: ${masked}`);
+  } else {
+    console.warn('[Database] WARNING: No database URL found. Set DATABASE_URL, MYSQL_URL, or MYSQL_PRIVATE_URL.');
+  }
+
   server.listen(port, () => {
     console.log(`Server running on http://localhost:${port}/`);
   });

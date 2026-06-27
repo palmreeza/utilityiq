@@ -355,7 +355,8 @@ export const appRouter = router({
       .mutation(async ({ ctx, input }) => {
         const assessment = await getAssessmentById(input.id);
         if (!assessment) throw new TRPCError({ code: "NOT_FOUND" });
-        await requireOrgAccess(ctx.user.id, assessment.organisationId, ["organisation_admin", "facilitator"]);
+        // platform_owner bypassed inside requireOrgAccess; assessors may also start/submit
+        await requireOrgAccess(ctx.user.id, assessment.organisationId, ["organisation_admin", "facilitator", "assessor"]);
         const extra =
           input.status === "Approved"
             ? { approvedByUserId: ctx.user.id, approvedAt: new Date() }

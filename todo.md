@@ -94,3 +94,8 @@
 - [x] BUG 2: Hide "New Assessment" button from Assessors/Reviewers/Executive Viewers in AssessmentList.tsx
 - [x] Add organisations.myRole tRPC procedure to return current user's org role
 - [x] Update AssessmentList.tsx to query user's org role and conditionally show Create button
+
+## Bug Fixes — Session 3
+- [x] FIX: Add cache invalidation to updateStatus.onSuccess in AssessmentWorkspace.tsx so UI re-renders after Start Assessment / Submit for Review
+- [x] FIX: Add cache invalidation to submitScore.onSuccess in AssessmentWorkspace.tsx
+- [x] FIX: Expand updateStatus allowed roles to include assessor (platform_owner already bypassed inside requireOrgAccess)

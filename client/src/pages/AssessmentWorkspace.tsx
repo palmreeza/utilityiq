@@ -66,6 +66,7 @@ export default function AssessmentWorkspace() {
   const [, navigate] = useLocation();
   const { user } = useAuth();
   const assessmentId = parseInt(id ?? "0");
+  const utils = trpc.useUtils();
 
   const [activeDomainId, setActiveDomainId] = useState<number | null>(null);
   const [expandedCapabilities, setExpandedCapabilities] = useState<Set<number>>(new Set());
@@ -89,6 +90,7 @@ export default function AssessmentWorkspace() {
     onSuccess: (_, vars) => {
       setSaving((prev) => { const n = new Set(prev); n.delete(vars.capabilityId); return n; });
       toast.success("Score saved");
+      utils.scoring.getScores.invalidate({ assessmentId });
     },
     onError: (err, vars) => {
       setSaving((prev) => { const n = new Set(prev); n.delete(vars.capabilityId); return n; });
@@ -97,7 +99,11 @@ export default function AssessmentWorkspace() {
   });
 
   const updateStatus = trpc.assessments.updateStatus.useMutation({
-    onSuccess: () => toast.success("Status updated"),
+    onSuccess: () => {
+      toast.success("Status updated");
+      utils.assessments.get.invalidate({ id: assessmentId });
+      utils.assessments.list.invalidate();
+    },
     onError: (err) => toast.error(err.message),
   });
 

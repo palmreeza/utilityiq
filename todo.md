@@ -99,3 +99,8 @@
 - [x] FIX: Add cache invalidation to updateStatus.onSuccess in AssessmentWorkspace.tsx so UI re-renders after Start Assessment / Submit for Review
 - [x] FIX: Add cache invalidation to submitScore.onSuccess in AssessmentWorkspace.tsx
 - [x] FIX: Expand updateStatus allowed roles to include assessor (platform_owner already bypassed inside requireOrgAccess)
+
+## Bug Fixes — Session 4
+- [x] FIX: Add unique constraint (assessmentId, userId) to assessment_participants table
+- [x] FIX: Create migration 0004_add_participant_unique.sql so Railway auto-applies on deploy
+- [x] FIX: Update Drizzle journal to include all 5 migrations in correct order

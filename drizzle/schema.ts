@@ -8,6 +8,7 @@ import {
   float,
   boolean,
   json,
+  uniqueIndex,
 } from "drizzle-orm/mysql-core";
 
 // ============================================================
@@ -163,18 +164,24 @@ export type InsertAssessment = typeof assessments.$inferInsert;
 // ============================================================
 // ASSESSMENT PARTICIPANTS
 // ============================================================
-export const assessmentParticipants = mysqlTable("assessment_participants", {
-  id: int("id").autoincrement().primaryKey(),
-  assessmentId: int("assessmentId").notNull(),
-  userId: int("userId").notNull(),
-  participantRole: mysqlEnum("participantRole", [
-    "facilitator",
-    "assessor",
-    "reviewer",
-    "executive_viewer",
-  ]).notNull(),
-  addedAt: timestamp("addedAt").defaultNow().notNull(),
-});
+export const assessmentParticipants = mysqlTable(
+  "assessment_participants",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    assessmentId: int("assessmentId").notNull(),
+    userId: int("userId").notNull(),
+    participantRole: mysqlEnum("participantRole", [
+      "facilitator",
+      "assessor",
+      "reviewer",
+      "executive_viewer",
+    ]).notNull(),
+    addedAt: timestamp("addedAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    uqAssessmentUser: uniqueIndex("uq_ap_assessment_user").on(table.assessmentId, table.userId),
+  })
+);
 
 export type AssessmentParticipant = typeof assessmentParticipants.$inferSelect;
 export type InsertAssessmentParticipant = typeof assessmentParticipants.$inferInsert;

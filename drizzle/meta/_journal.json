@@ -22,6 +22,20 @@
       "when": 1782397608547,
       "tag": "0002_thin_black_knight",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1782713523436,
+      "tag": "0003_add_platform_role",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1782900000000,
+      "tag": "0004_add_participant_unique",
+      "breakpoints": true
     }
   ]
 }

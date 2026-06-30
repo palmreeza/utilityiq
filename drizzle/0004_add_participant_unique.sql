@@ -1,0 +1,1 @@
+ALTER TABLE `assessment_participants` ADD CONSTRAINT `uq_ap_assessment_user` UNIQUE(`assessmentId`,`userId`);

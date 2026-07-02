@@ -325,7 +325,7 @@ export async function upsertScoreResponse(data: {
       ...data,
       submittedAt: data.isDraft === false ? new Date() : undefined,
     });
-    return (result as any).insertId;
+    return (result as any)[0]?.insertId ?? (result as any).insertId;
   }
 }
 
@@ -486,4 +486,68 @@ export async function removeOrganisationMember(organisationId: number, userId: n
         eq(organisationMembers.userId, userId)
       )
     );
+}
+
+// ── Default Template Seed ──────────────────────────────────────────────────
+/**
+ * Seeds the default Energy & Utility Maturity Assessment template if it does
+ * not already exist. Safe to call on every server startup — idempotent.
+ */
+export async function seedDefaultTemplateIfMissing(): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+
+  // Lazy import to avoid circular deps at module load time
+  const { DEFAULT_TEMPLATE, DOMAINS } = await import("./seedTemplate");
+
+  // Check if default template already exists
+  const existing = await db
+    .select()
+    .from(assessmentTemplates)
+    .where(eq(assessmentTemplates.isDefault, true))
+    .limit(1);
+  if (existing.length > 0) {
+    console.log(`[Seed] Default template already exists (id=${existing[0].id}) — skipping.`);
+    return;
+  }
+
+  console.log("[Seed] Seeding default Energy & Utility Maturity Assessment template…");
+
+  const templateResult = await db.insert(assessmentTemplates).values({
+    ...DEFAULT_TEMPLATE,
+    createdByUserId: null,
+  });
+  const templateId = (templateResult as any)[0]?.insertId ?? (templateResult as any).insertId;
+  if (!templateId) throw new Error("[Seed] Failed to get templateId after insert");
+
+  const levelLabels = ["Initial", "Developing", "Defined", "Managed", "Optimising"];
+
+  for (const domainData of DOMAINS) {
+    const { capabilities: caps, ...domainFields } = domainData;
+    const domainResult = await db.insert(domains).values({ ...domainFields, templateId });
+    const domainId = (domainResult as any)[0]?.insertId ?? (domainResult as any).insertId;
+    if (!domainId) throw new Error(`[Seed] Failed to get domainId for domain: ${domainFields.name}`);
+
+    for (let ci = 0; ci < caps.length; ci++) {
+      const { levels, ...capFields } = caps[ci];
+      const capResult = await db.insert(capabilities).values({
+        ...capFields,
+        domainId,
+        sortOrder: ci,
+      });
+      const capId = (capResult as any)[0]?.insertId ?? (capResult as any).insertId;
+      if (!capId) throw new Error(`[Seed] Failed to get capId for capability: ${capFields.name}`);
+
+      for (let li = 0; li < levels.length; li++) {
+        await db.insert(levelDescriptors).values({
+          capabilityId: capId,
+          level: li + 1,
+          label: levelLabels[li] ?? `Level ${li + 1}`,
+          description: levels[li].description,
+        });
+      }
+    }
+  }
+
+  console.log(`[Seed] Default template seeded successfully (templateId=${templateId}).`);
 }

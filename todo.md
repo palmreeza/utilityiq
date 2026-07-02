@@ -104,3 +104,11 @@
 - [x] FIX: Add unique constraint (assessmentId, userId) to assessment_participants table
 - [x] FIX: Create migration 0004_add_participant_unique.sql so Railway auto-applies on deploy
 - [x] FIX: Update Drizzle journal to include all 5 migrations in correct order
+
+## Bug Fixes — Session 5 (insertId + auto-seed)
+- [x] FIX: Correct insertId extraction in templates.seed (templateId, domainId, capId)
+- [x] FIX: Correct insertId extraction in organisations.create (orgId)
+- [x] FIX: Correct insertId extraction in upsertScoreResponse (db.ts)
+- [x] FIX: Add seedDefaultTemplateIfMissing() to db.ts (idempotent, uses raw SQL)
+- [x] FIX: Wire seedDefaultTemplateIfMissing() into server startup after migrations
+- [x] VERIFY: Sandbox DB has 8 domains, 25 capabilities, 125 level descriptors

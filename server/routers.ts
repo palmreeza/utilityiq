@@ -108,7 +108,7 @@ export const appRouter = router({
         const db = await getDb();
         if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
         const result = await db.insert(organisations).values({ ...input, isActive: true });
-        const orgId = (result as any).insertId;
+        const orgId = (result as any)[0]?.insertId ?? (result as any).insertId;
         // Add creator as org admin
         await addOrganisationMember({
           organisationId: orgId,
@@ -238,12 +238,14 @@ export const appRouter = router({
         ...DEFAULT_TEMPLATE,
         createdByUserId: ctx.user.id,
       });
-      const templateId = (templateResult as any).insertId;
+      const templateId = (templateResult as any)[0]?.insertId ?? (templateResult as any).insertId;
+      if (!templateId) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to get templateId" });
 
       for (const domainData of DOMAINS) {
         const { capabilities: caps, ...domainFields } = domainData;
         const domainResult = await db.insert(domains).values({ ...domainFields, templateId });
-        const domainId = (domainResult as any).insertId;
+        const domainId = (domainResult as any)[0]?.insertId ?? (domainResult as any).insertId;
+        if (!domainId) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to get domainId" });
 
         for (let ci = 0; ci < caps.length; ci++) {
           const { levels, ...capFields } = caps[ci];
@@ -252,7 +254,8 @@ export const appRouter = router({
             domainId,
             sortOrder: ci,
           });
-          const capId = (capResult as any).insertId;
+          const capId = (capResult as any)[0]?.insertId ?? (capResult as any).insertId;
+          if (!capId) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to get capId" });
 
           const levelLabels = ["Initial", "Developing", "Defined", "Managed", "Optimising"];
           for (let li = 0; li < levels.length; li++) {

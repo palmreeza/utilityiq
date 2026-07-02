@@ -9,6 +9,7 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { runMigrations } from "../migrate";
+import { seedDefaultTemplateIfMissing } from "../db";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -33,6 +34,8 @@ async function startServer() {
   // Run database migrations before starting the server
   // This ensures all tables exist on Railway (and any fresh deployment)
   await runMigrations();
+  // Auto-seed default template if the DB is fresh
+  await seedDefaultTemplateIfMissing().catch((e) => console.error("[Seed] Failed:", e.message));
 
   const app = express();
   const server = createServer(app);

@@ -146,12 +146,9 @@ export default function Home() {
         style={{ background: "rgba(255,255,255,0.95)", backdropFilter: "blur(12px)", borderColor: "#e5e5e5" }}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "#1e3640" }}>
-              <Zap className="w-5 h-5 text-white" />
-            </div>
+            <img src="/manus-storage/iotnxt-logo_3eb3ef16.png" alt="IoT.nxt" className="h-8 w-auto" />
             <div className="flex flex-col leading-none">
               <span className="font-display font-bold text-base tracking-tight" style={{ color: "#252525" }}>Utility IQ</span>
-              <span className="text-[10px] font-medium tracking-widest uppercase" style={{ color: "#727272" }}>by IOT.nxt</span>
             </div>
           </div>
           <div className="hidden md:flex items-center gap-8">
@@ -603,12 +600,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "#e2232a" }}>
-                <Zap className="w-5 h-5 text-white" />
-              </div>
-              <div>
+              <div className="flex flex-col gap-1">
+                <img src="/manus-storage/iotnxt-logo_3eb3ef16.png" alt="IoT.nxt" className="h-7 w-auto brightness-0 invert" />
                 <div className="font-display font-bold text-white">Utility IQ</div>
-                <div className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>Enterprise Energy Maturity Platform by IOT.nxt</div>
+                <div className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>Enterprise Energy Maturity Platform</div>
               </div>
             </div>
             <div className="flex flex-wrap justify-center gap-6">

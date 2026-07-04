@@ -55,13 +55,9 @@ export default function AppLayout({ children, title, subtitle, actions }: AppLay
       {/* Logo area */}
       <div className="relative px-5 pt-6 pb-5">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg"
-            style={{ background: "linear-gradient(135deg, #e2232a, #8c191c)" }}>
-            <Zap className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <div className="font-display font-bold text-base text-white tracking-tight">Utility IQ</div>
-            <div className="text-[10px] font-bold tracking-widest uppercase" style={{ color: "#44ebca" }}>by IOT.nxt</div>
+          <div className="flex flex-col gap-1">
+            <img src="/manus-storage/iotnxt-logo_3eb3ef16.png" alt="IoT.nxt" className="h-7 w-auto brightness-0 invert" />
+            <div className="font-display font-bold text-sm text-white tracking-tight">Utility IQ</div>
           </div>
         </div>
 
@@ -192,9 +188,7 @@ export default function AppLayout({ children, title, subtitle, actions }: AppLay
               <Menu className="w-5 h-5" />
             </button>
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "#e2232a" }}>
-                <Zap className="w-4 h-4 text-white" />
-              </div>
+              <img src="/manus-storage/iotnxt-logo_3eb3ef16.png" alt="IoT.nxt" className="h-6 w-auto" />
               <span className="font-display font-bold text-sm" style={{ color: "#252525" }}>Utility IQ</span>
             </div>
           </div>

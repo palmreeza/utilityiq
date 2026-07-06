@@ -1,4 +1,5 @@
 import { useAuth, authLogin, authRegister } from "@/_core/hooks/useAuth";
+import { IOTNXT_LOGO } from "@/lib/logo";
 import { useLocation } from "wouter";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -146,7 +147,7 @@ export default function Home() {
         style={{ background: "rgba(255,255,255,0.95)", backdropFilter: "blur(12px)", borderColor: "#e5e5e5" }}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
           <div className="flex items-center gap-3">
-            <img src="/manus-storage/iotnxt-logo_3eb3ef16.png" alt="IoT.nxt" className="h-8 w-auto" />
+            <img src={IOTNXT_LOGO} alt="IoT.nxt" className="h-8 w-auto" />
             <div className="flex flex-col leading-none">
               <span className="font-display font-bold text-base tracking-tight" style={{ color: "#252525" }}>Utility IQ</span>
             </div>
@@ -182,11 +183,7 @@ export default function Home() {
 
             {/* Left copy */}
             <div className="animate-fade-up">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase mb-6 border"
-                style={{ background: "rgba(226,35,42,0.15)", borderColor: "rgba(226,35,42,0.40)", color: "#ff8080" }}>
-                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#e2232a" }} />
-                Enterprise B2B SaaS Platform
-              </div>
+
 
               <h1 className="font-display font-bold leading-[1.05] mb-6 text-white"
                 style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", letterSpacing: "-0.03em" }}>
@@ -601,7 +598,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
               <div className="flex flex-col gap-1">
-                <img src="/manus-storage/iotnxt-logo_3eb3ef16.png" alt="IoT.nxt" className="h-7 w-auto brightness-0 invert" />
+                <img src={IOTNXT_LOGO} alt="IoT.nxt" className="h-7 w-auto brightness-0 invert" />
                 <div className="font-display font-bold text-white">Utility IQ</div>
                 <div className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>Enterprise Energy Maturity Platform</div>
               </div>

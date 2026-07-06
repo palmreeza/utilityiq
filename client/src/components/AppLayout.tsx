@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { IOTNXT_LOGO } from "@/lib/logo";
 import { useLocation } from "wouter";
 import { useState } from "react";
 import {
@@ -56,7 +57,7 @@ export default function AppLayout({ children, title, subtitle, actions }: AppLay
       <div className="relative px-5 pt-6 pb-5">
         <div className="flex items-center gap-3">
           <div className="flex flex-col gap-1">
-            <img src="/manus-storage/iotnxt-logo_3eb3ef16.png" alt="IoT.nxt" className="h-7 w-auto brightness-0 invert" />
+            <img src={IOTNXT_LOGO} alt="IoT.nxt" className="h-7 w-auto brightness-0 invert" />
             <div className="font-display font-bold text-sm text-white tracking-tight">Utility IQ</div>
           </div>
         </div>
@@ -188,7 +189,7 @@ export default function AppLayout({ children, title, subtitle, actions }: AppLay
               <Menu className="w-5 h-5" />
             </button>
             <div className="flex items-center gap-2">
-              <img src="/manus-storage/iotnxt-logo_3eb3ef16.png" alt="IoT.nxt" className="h-6 w-auto" />
+              <img src={IOTNXT_LOGO} alt="IoT.nxt" className="h-6 w-auto" />
               <span className="font-display font-bold text-sm" style={{ color: "#252525" }}>Utility IQ</span>
             </div>
           </div>

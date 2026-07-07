@@ -40,14 +40,14 @@ function useInView(threshold = 0.2) {
 
 /* ── Data ── */
 const DOMAINS = [
-  { icon: Gauge,    name: "Meter Management",    std: "IEC 62056",         color: "#e2232a" },
-  { icon: Receipt,  name: "Billing",             std: "Revenue Governance", color: "#1e3640" },
-  { icon: Settings, name: "Asset Operations",    std: "ISO 55001",          color: "#e2232a" },
-  { icon: BarChart3,name: "Analytics",           std: "ISO 8000",           color: "#1e3640" },
-  { icon: Shield,   name: "Cybersecurity",       std: "NIST CSF / C2M2",   color: "#e2232a" },
-  { icon: Leaf,     name: "Sustainability",      std: "ISO 50001",          color: "#1e3640" },
-  { icon: Users,    name: "Customer Engagement", std: "Utility Benchmarks", color: "#e2232a" },
-  { icon: Zap,      name: "Smart Infrastructure",std: "SEI SGMM",           color: "#1e3640" },
+  { icon: Gauge,    name: "Meter Management",    std: "IEC 62056",          what: "Meter coverage, AMI/AMR deployment, data quality and meter lifecycle management." },
+  { icon: Receipt,  name: "Billing",             std: "Revenue Governance", what: "Billing accuracy, revenue protection, tariff management and dispute resolution." },
+  { icon: Settings, name: "Asset Operations",    std: "ISO 55001",          what: "Asset register completeness, maintenance strategies, lifecycle planning and performance." },
+  { icon: BarChart3,name: "Analytics",           std: "ISO 8000",           what: "Data quality, operational analytics, predictive insights and reporting maturity." },
+  { icon: Shield,   name: "Cybersecurity",       std: "NIST CSF / C2M2",   what: "OT/IT security posture, incident response capability and cyber risk governance." },
+  { icon: Leaf,     name: "Sustainability",      std: "ISO 50001",          what: "Energy efficiency programmes, carbon reporting, ESG targets and regulatory compliance." },
+  { icon: Users,    name: "Customer Engagement", std: "Utility Benchmarks", what: "Customer communication channels, self-service capability and satisfaction measurement." },
+  { icon: Zap,      name: "Smart Infrastructure",std: "SEI SGMM",           what: "Grid modernisation, smart device integration and digital infrastructure readiness." },
 ];
 
 const EMS_LEVELS = [
@@ -72,6 +72,15 @@ const STATS = [
   { value: 25,  suffix: "+", label: "Capabilities Assessed" },
   { value: 5,   suffix: "",  label: "EMS Maturity Levels" },
   { value: 4,   suffix: "",  label: "Roadmap Horizons" },
+];
+
+const AUDIENCE_TAGS = [
+  "Energy Management",
+  "Utility Operations",
+  "Sustainability",
+  "Asset Management",
+  "Cybersecurity",
+  "Executive Reporting",
 ];
 
 /* ── Score bar component ── */
@@ -144,7 +153,7 @@ export default function Home() {
           NAV
       ════════════════════════════════════════ */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b"
-        style={{ background: "rgba(255,255,255,0.95)", backdropFilter: "blur(12px)", borderColor: "#e5e5e5" }}>
+        style={{ background: "rgba(255,255,255,0.97)", backdropFilter: "blur(12px)", borderColor: "#e5e5e5" }}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
           <div className="flex items-center gap-3">
             <img src={IOTNXT_LOGO} alt="IoT.nxt" className="h-8 w-auto" />
@@ -153,20 +162,25 @@ export default function Home() {
             </div>
           </div>
           <div className="hidden md:flex items-center gap-8">
-            {["Platform", "Domains", "Features", "Standards"].map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`}
+            {[
+              { label: "01 Platform",   href: "#platform" },
+              { label: "02 Domains",    href: "#domains" },
+              { label: "03 Standards",  href: "#standards" },
+              { label: "04 Roadmap",    href: "#roadmap" },
+            ].map((item) => (
+              <a key={item.label} href={item.href}
                 className="text-sm font-medium transition-colors"
                 style={{ color: "#727272" }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = "#e2232a")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "#727272")}>
-                {item}
+                {item.label}
               </a>
             ))}
           </div>
           <button onClick={() => document.getElementById('auth-section')?.scrollIntoView({ behavior: 'smooth' })}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-white transition-all duration-150 active:scale-95"
-            style={{ background: "#e2232a", boxShadow: "0 4px 14px rgba(226,35,42,0.35)" }}>
-            Sign In <ArrowRight className="w-4 h-4" />
+            style={{ background: "#e2232a", boxShadow: "0 4px 14px rgba(226,35,42,0.30)" }}>
+            Access Platform <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </nav>
@@ -175,7 +189,7 @@ export default function Home() {
           HERO
       ════════════════════════════════════════ */}
       <section id="platform" style={{ background: "#1e3640", paddingTop: "6rem" }}>
-        {/* Diagonal red accent bar */}
+        {/* Red accent bar below nav */}
         <div className="absolute left-0 right-0 h-1" style={{ background: "#e2232a", top: "64px" }} />
 
         <div className="max-w-7xl mx-auto px-6 pt-20 pb-0">
@@ -184,28 +198,38 @@ export default function Home() {
             {/* Left copy */}
             <div className="animate-fade-up">
 
+              {/* Audience strip */}
+              <div className="flex flex-wrap gap-2 mb-8">
+                {AUDIENCE_TAGS.map((tag) => (
+                  <span key={tag}
+                    className="text-[11px] font-semibold tracking-wide px-3 py-1 rounded-full border"
+                    style={{ borderColor: "rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.60)", background: "rgba(255,255,255,0.05)" }}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
 
               <h1 className="font-display font-bold leading-[1.05] mb-6 text-white"
-                style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", letterSpacing: "-0.03em" }}>
-                Measure What<br />
-                <span style={{ color: "#e2232a" }}>Matters</span> in<br />
-                Energy Maturity
+                style={{ fontSize: "clamp(2.2rem, 4.5vw, 3.6rem)", letterSpacing: "-0.03em" }}>
+                Assess. Benchmark.<br />
+                <span style={{ color: "#e2232a" }}>Transform.</span><br />
+                <span style={{ fontSize: "0.75em", color: "rgba(255,255,255,0.85)" }}>Your Energy &amp; Utility Maturity.</span>
               </h1>
 
-              <p className="text-lg leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.65)", maxWidth: "520px" }}>
-                Utility IQ transforms spreadsheet-based maturity assessments into a repeatable, team-based, auditable digital workflow — from initial scoring to board-ready transformation roadmaps.
+              <p className="text-lg leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.60)", maxWidth: "520px" }}>
+                A structured, evidence-based platform that turns complex energy and utility assessments into clear maturity scores, gap analysis, and board-ready transformation roadmaps.
               </p>
 
               <div className="flex flex-wrap gap-3 mb-10">
                 <button onClick={() => document.getElementById('auth-section')?.scrollIntoView({ behavior: 'smooth' })}
                   className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-base text-white transition-all duration-150 active:scale-95"
                   style={{ background: "#e2232a", boxShadow: "0 8px 24px rgba(226,35,42,0.40)" }}>
-                  Get Started <ArrowRight className="w-5 h-5" />
+                  Access Platform <ArrowRight className="w-5 h-5" />
                 </button>
-                <a href="#features"
+                <a href="#domains"
                   className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-base border transition-all duration-150"
-                  style={{ borderColor: "rgba(255,255,255,0.20)", color: "rgba(255,255,255,0.80)" }}>
-                  Explore Features <ChevronRight className="w-4 h-4" />
+                  style={{ borderColor: "rgba(255,255,255,0.20)", color: "rgba(255,255,255,0.75)" }}>
+                  Explore Domains <ChevronRight className="w-4 h-4" />
                 </a>
               </div>
 
@@ -213,7 +237,7 @@ export default function Home() {
               <div className="flex flex-wrap gap-4">
                 {["ISO 50001", "ISO 55001", "NIST CSF", "IEC 62056"].map((std) => (
                   <div key={std} className="flex items-center gap-1.5 text-xs font-medium"
-                    style={{ color: "rgba(255,255,255,0.45)" }}>
+                    style={{ color: "rgba(255,255,255,0.40)" }}>
                     <CheckCircle className="w-3.5 h-3.5" style={{ color: "#44ebca" }} />
                     {std}
                   </div>
@@ -221,10 +245,10 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right — mock assessment card */}
+            {/* Right — mock assessment dashboard card */}
             <div className="relative animate-fade-up delay-150 hidden lg:block">
               {/* Glow */}
-              <div className="absolute inset-0 rounded-3xl blur-3xl opacity-30 pointer-events-none"
+              <div className="absolute inset-0 rounded-3xl blur-3xl opacity-25 pointer-events-none"
                 style={{ background: "radial-gradient(ellipse at center, #e2232a, transparent)" }} />
 
               <div className="relative rounded-3xl border overflow-hidden"
@@ -235,9 +259,9 @@ export default function Home() {
                   style={{ borderColor: "rgba(255,255,255,0.10)" }}>
                   <div>
                     <div className="text-xs font-bold tracking-widest uppercase mb-0.5" style={{ color: "#44ebca" }}>LIVE ASSESSMENT</div>
-                    <div className="text-sm font-semibold text-white">Eskom Holdings — Q2 2025</div>
+                    <div className="text-sm font-semibold text-white">Metro Utility — Q2 2025</div>
                   </div>
-                  <div className="px-2.5 py-1 rounded-full text-xs font-bold" style={{ background: "rgba(226,35,42,0.25)", color: "#ff8080" }}>
+                  <div className="px-2.5 py-1 rounded-full text-xs font-bold" style={{ background: "rgba(68,235,202,0.15)", color: "#44ebca" }}>
                     In Progress
                   </div>
                 </div>
@@ -256,7 +280,7 @@ export default function Home() {
                         <span className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.70)" }}>{d.name}</span>
                         <div className="flex items-center gap-2">
                           <span className="text-xs font-bold" style={{ color: "#e2232a" }}>{d.score}/5</span>
-                          <span className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>→</span>
+                          <span className="text-xs" style={{ color: "rgba(255,255,255,0.30)" }}>→</span>
                           <span className="text-xs font-bold" style={{ color: "#44ebca" }}>{d.target}/5</span>
                         </div>
                       </div>
@@ -272,23 +296,19 @@ export default function Home() {
                   ))}
                 </div>
 
-                {/* Overall score */}
-                <div className="mx-5 mb-5 p-4 rounded-2xl border"
-                  style={{ background: "rgba(226,35,42,0.10)", borderColor: "rgba(226,35,42,0.25)" }}>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="text-xs font-bold tracking-widest uppercase mb-1" style={{ color: "rgba(255,255,255,0.45)" }}>Overall Maturity</div>
-                      <div className="font-display text-3xl font-bold" style={{ color: "#e2232a" }}>2.6 <span className="text-base font-normal" style={{ color: "rgba(255,255,255,0.40)" }}>/5</span></div>
-                      <div className="text-xs mt-0.5 font-medium" style={{ color: "#44ebca" }}>Understand — Energy Intelligence</div>
-                    </div>
-                    <div className="relative w-16 h-16">
-                      <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
-                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="3" />
-                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#e2232a" strokeWidth="3"
-                          strokeDasharray={`${(2.6/5)*100} 100`} strokeLinecap="round" />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center font-bold text-xs text-white">52%</div>
-                    </div>
+                {/* Dashboard metrics row */}
+                <div className="mx-5 mb-4 grid grid-cols-3 gap-3">
+                  <div className="p-3 rounded-xl border text-center" style={{ background: "rgba(226,35,42,0.08)", borderColor: "rgba(226,35,42,0.20)" }}>
+                    <div className="font-display text-xl font-bold" style={{ color: "#e2232a" }}>2.6</div>
+                    <div className="text-[10px] font-medium mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>Overall Score</div>
+                  </div>
+                  <div className="p-3 rounded-xl border text-center" style={{ background: "rgba(226,35,42,0.08)", borderColor: "rgba(226,35,42,0.20)" }}>
+                    <div className="font-display text-xl font-bold" style={{ color: "#e2232a" }}>+2.0</div>
+                    <div className="text-[10px] font-medium mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>Highest Gap</div>
+                  </div>
+                  <div className="p-3 rounded-xl border text-center" style={{ background: "rgba(68,235,202,0.08)", borderColor: "rgba(68,235,202,0.20)" }}>
+                    <div className="font-display text-xl font-bold" style={{ color: "#44ebca" }}>14</div>
+                    <div className="text-[10px] font-medium mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>Evidence Items</div>
                   </div>
                 </div>
 
@@ -302,7 +322,7 @@ export default function Home() {
                       </div>
                     ))}
                   </div>
-                  <span className="text-xs" style={{ color: "rgba(255,255,255,0.40)" }}>4 assessors · 3 domains complete</span>
+                  <span className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>4 assessors · 3 domains complete</span>
                 </div>
               </div>
             </div>
@@ -325,7 +345,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {STATS.map((stat, i) => (
               <div key={stat.label} className="text-center p-6 rounded-2xl border"
-                style={{ borderColor: "#e5e5e5", borderTop: "3px solid #e2232a" }}>
+                style={{ borderColor: "#e5e5e5", borderTop: "3px solid #1e3640" }}>
                 <div className="font-display font-bold mb-1" style={{ fontSize: "3rem", color: "#252525", lineHeight: 1 }}>
                   {counters[i]}{stat.suffix}
                 </div>
@@ -337,24 +357,24 @@ export default function Home() {
       </section>
 
       {/* ════════════════════════════════════════
-          EMS MATURITY LADDER
+          01 PLATFORM — EMS MATURITY LADDER
       ════════════════════════════════════════ */}
-      <section id="platform-detail" className="py-24" style={{ background: "#f5f5f5" }}>
+      <section id="platform-detail" className="py-28" style={{ background: "#f7f7f7" }}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-2xl mb-16">
-            <div className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "#e2232a" }}>THE FRAMEWORK</div>
+            <div className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "#727272" }}>01 PLATFORM</div>
             <h2 className="font-display font-bold mb-4" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", letterSpacing: "-0.02em", color: "#252525" }}>
               IOT.nxt Energy<br />Maturity Model
             </h2>
             <p style={{ color: "#727272", lineHeight: 1.7 }}>
-              Five progressive levels guide organisations from basic energy visibility through to active market participation. Utility IQ tells you exactly where you are — and what it takes to get to the next level.
+              Five progressive levels guide organisations from basic energy visibility through to active market participation. Utility IQ tells you exactly where you are — and what it takes to reach the next level.
             </p>
           </div>
 
           <div className="space-y-3">
-            {EMS_LEVELS.map((lvl, i) => (
+            {EMS_LEVELS.map((lvl) => (
               <div key={lvl.level}
-                className="flex items-center gap-6 p-5 rounded-2xl border bg-white transition-all duration-300 group cursor-default"
+                className="flex items-center gap-6 p-5 rounded-2xl border bg-white transition-all duration-300 cursor-default"
                 style={{ borderColor: "#e5e5e5" }}
                 onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = lvl.color; (e.currentTarget as HTMLElement).style.boxShadow = `0 4px 24px ${lvl.color}18`; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#e5e5e5"; (e.currentTarget as HTMLElement).style.boxShadow = ""; }}>
@@ -385,18 +405,18 @@ export default function Home() {
       </section>
 
       {/* ════════════════════════════════════════
-          8 DOMAINS
+          02 ASSESSMENT DOMAINS
       ════════════════════════════════════════ */}
-      <section id="domains" className="py-24" style={{ background: "#1e3640" }}>
+      <section id="domains" className="py-28" style={{ background: "#1e3640" }}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
             <div>
-              <div className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "#44ebca" }}>ASSESSMENT SCOPE</div>
+              <div className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "rgba(255,255,255,0.40)" }}>02 ASSESSMENT DOMAINS</div>
               <h2 className="font-display font-bold text-white" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", letterSpacing: "-0.02em" }}>
                 Eight Domains.<br />One Platform.
               </h2>
             </div>
-            <p className="text-base max-w-sm" style={{ color: "rgba(255,255,255,0.55)", lineHeight: 1.7 }}>
+            <p className="text-base max-w-sm" style={{ color: "rgba(255,255,255,0.50)", lineHeight: 1.7 }}>
               Every domain is aligned to an internationally recognised standard, giving your assessment credibility with regulators, boards and auditors.
             </p>
           </div>
@@ -406,14 +426,15 @@ export default function Home() {
               <div key={d.name}
                 className="group p-5 rounded-2xl border transition-all duration-300 cursor-default"
                 style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.08)" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(226,35,42,0.12)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(226,35,42,0.35)"; }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.18)"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.04)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.08)"; }}>
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
-                  style={{ background: i % 2 === 0 ? "rgba(226,35,42,0.20)" : "rgba(68,235,202,0.15)" }}>
+                  style={{ background: i % 2 === 0 ? "rgba(226,35,42,0.18)" : "rgba(68,235,202,0.12)" }}>
                   <d.icon className="w-5 h-5" style={{ color: i % 2 === 0 ? "#e2232a" : "#44ebca" }} />
                 </div>
                 <div className="font-semibold text-sm mb-1 text-white">{d.name}</div>
-                <div className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.40)" }}>{d.std}</div>
+                <div className="text-[10px] font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(255,255,255,0.30)" }}>{d.std}</div>
+                <div className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.45)" }}>{d.what}</div>
               </div>
             ))}
           </div>
@@ -423,15 +444,15 @@ export default function Home() {
       {/* ════════════════════════════════════════
           FEATURES
       ════════════════════════════════════════ */}
-      <section id="features" className="py-24" style={{ background: "#ffffff" }}>
+      <section id="features" className="py-28" style={{ background: "#ffffff" }}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <div className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "#e2232a" }}>CAPABILITIES</div>
+            <div className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "#727272" }}>CAPABILITIES</div>
             <h2 className="font-display font-bold mb-4" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", letterSpacing: "-0.02em", color: "#252525" }}>
               Built for the Entire<br />Assessment Lifecycle
             </h2>
             <p className="text-lg max-w-2xl mx-auto" style={{ color: "#727272" }}>
-              From provisioning a client tenant to handing over a board-ready PDF — every step is covered.
+              From provisioning a client organisation to handing over a board-ready report — every step is covered.
             </p>
           </div>
 
@@ -439,16 +460,16 @@ export default function Home() {
             {FEATURES.map((f, i) => (
               <div key={f.title}
                 className="group p-7 rounded-2xl border transition-all duration-300"
-                style={{ borderColor: "#e5e5e5", borderTop: `3px solid ${i % 2 === 0 ? "#e2232a" : "#1e3640"}` }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 32px rgba(37,37,37,0.10)"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
+                style={{ borderColor: "#e5e5e5", borderTop: `3px solid ${i % 2 === 0 ? "#1e3640" : "#e2232a"}` }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 32px rgba(37,37,37,0.08)"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = ""; (e.currentTarget as HTMLElement).style.transform = ""; }}>
                 <div className="text-[10px] font-bold tracking-widest uppercase mb-4 px-2 py-1 rounded w-fit"
-                  style={{ background: i % 2 === 0 ? "rgba(226,35,42,0.08)" : "rgba(30,54,64,0.08)", color: i % 2 === 0 ? "#e2232a" : "#1e3640" }}>
+                  style={{ background: "rgba(30,54,64,0.07)", color: "#1e3640" }}>
                   {f.tag}
                 </div>
                 <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-5"
-                  style={{ background: i % 2 === 0 ? "rgba(226,35,42,0.08)" : "rgba(30,54,64,0.08)" }}>
-                  <f.icon className="w-5 h-5" style={{ color: i % 2 === 0 ? "#e2232a" : "#1e3640" }} />
+                  style={{ background: "rgba(30,54,64,0.07)" }}>
+                  <f.icon className="w-5 h-5" style={{ color: "#1e3640" }} />
                 </div>
                 <h3 className="font-display font-bold text-lg mb-3" style={{ color: "#252525" }}>{f.title}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: "#727272" }}>{f.desc}</p>
@@ -459,30 +480,33 @@ export default function Home() {
       </section>
 
       {/* ════════════════════════════════════════
-          STANDARDS CREDIBILITY STRIP
+          03 STANDARDS ALIGNMENT
       ════════════════════════════════════════ */}
-      <section id="standards" className="py-16 border-y" style={{ borderColor: "#e5e5e5", background: "#f5f5f5" }}>
+      <section id="standards" className="py-28" style={{ background: "#f7f7f7" }}>
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-10">
-            <div className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "#727272" }}>STANDARDS ALIGNMENT</div>
-            <h3 className="font-display font-bold text-xl" style={{ color: "#252525" }}>
-              Your assessment is credible because it is grounded in recognised standards
-            </h3>
+          <div className="text-center mb-12">
+            <div className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "#727272" }}>03 STANDARDS ALIGNMENT</div>
+            <h2 className="font-display font-bold mb-3" style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.5rem)", letterSpacing: "-0.02em", color: "#252525" }}>
+              Industry-aligned assessment framework.
+            </h2>
+            <p className="text-base max-w-2xl mx-auto" style={{ color: "#727272" }}>
+              Informed by recognised energy, asset, cybersecurity, sustainability and smart infrastructure frameworks.
+            </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { std: "ISO 50001",    desc: "Energy Management Systems",       domain: "Sustainability" },
-              { std: "ISO 55001",    desc: "Asset Management",                domain: "Asset Operations" },
-              { std: "NIST CSF",     desc: "Cybersecurity Framework",         domain: "Cybersecurity" },
-              { std: "IEC 62056",    desc: "Smart Metering Data Exchange",    domain: "Meter Management" },
-              { std: "C2M2",         desc: "Cybersecurity Capability Maturity",domain: "Cybersecurity" },
-              { std: "ISO 8000",     desc: "Data Quality",                    domain: "Analytics" },
-              { std: "SEI SGMM",     desc: "Smart Grid Maturity Model",       domain: "Smart Infrastructure" },
-              { std: "ISO 14001",    desc: "Environmental Management",        domain: "Sustainability" },
+              { std: "ISO 50001",    desc: "Energy Management Systems",        domain: "Sustainability" },
+              { std: "ISO 55001",    desc: "Asset Management",                 domain: "Asset Operations" },
+              { std: "NIST CSF",     desc: "Cybersecurity Framework",          domain: "Cybersecurity" },
+              { std: "IEC 62056",    desc: "Smart Metering Data Exchange",     domain: "Meter Management" },
+              { std: "C2M2",         desc: "Cybersecurity Capability Maturity", domain: "Cybersecurity" },
+              { std: "ISO 8000",     desc: "Data Quality",                     domain: "Analytics" },
+              { std: "SEI SGMM",     desc: "Smart Grid Maturity Model",        domain: "Smart Infrastructure" },
+              { std: "ISO 14001",    desc: "Environmental Management",         domain: "Sustainability" },
             ].map((s) => (
               <div key={s.std} className="p-4 rounded-xl bg-white border flex flex-col gap-1"
                 style={{ borderColor: "#e5e5e5" }}>
-                <div className="font-display font-bold text-base" style={{ color: "#e2232a" }}>{s.std}</div>
+                <div className="font-display font-bold text-base" style={{ color: "#1e3640" }}>{s.std}</div>
                 <div className="text-xs font-medium" style={{ color: "#252525" }}>{s.desc}</div>
                 <div className="text-[10px] font-bold tracking-widest uppercase mt-1" style={{ color: "#c9c9c9" }}>{s.domain}</div>
               </div>
@@ -492,12 +516,12 @@ export default function Home() {
       </section>
 
       {/* ════════════════════════════════════════
-          HOW IT WORKS
+          04 ROADMAP OUTPUT — HOW IT WORKS
       ════════════════════════════════════════ */}
-      <section className="py-24" style={{ background: "#ffffff" }}>
+      <section id="roadmap" className="py-28" style={{ background: "#ffffff" }}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <div className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "#e2232a" }}>PROCESS</div>
+            <div className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "#727272" }}>04 ROADMAP OUTPUT</div>
             <h2 className="font-display font-bold mb-4" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", letterSpacing: "-0.02em", color: "#252525" }}>
               From Engagement to Roadmap<br />in Four Steps
             </h2>
@@ -513,14 +537,14 @@ export default function Home() {
               <div key={s.step} className="relative">
                 {i < 3 && (
                   <div className="hidden md:block absolute top-6 left-full w-full h-px z-0"
-                    style={{ background: "linear-gradient(90deg, #e2232a, #e5e5e5)", width: "calc(100% - 3rem)", left: "calc(100% - 1.5rem)" }} />
+                    style={{ background: "linear-gradient(90deg, #1e3640, #e5e5e5)", width: "calc(100% - 3rem)", left: "calc(100% - 1.5rem)" }} />
                 )}
                 <div className="relative z-10 p-6 rounded-2xl border bg-white"
-                  style={{ borderColor: "#e5e5e5", borderTop: "3px solid #e2232a" }}>
+                  style={{ borderColor: "#e5e5e5", borderTop: "3px solid #1e3640" }}>
                   <div className="font-display font-bold text-4xl mb-4" style={{ color: "#f0f0f0" }}>{s.step}</div>
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
-                    style={{ background: "rgba(226,35,42,0.08)" }}>
-                    <s.icon className="w-5 h-5" style={{ color: "#e2232a" }} />
+                    style={{ background: "rgba(30,54,64,0.07)" }}>
+                    <s.icon className="w-5 h-5" style={{ color: "#1e3640" }} />
                   </div>
                   <h3 className="font-display font-bold text-lg mb-2" style={{ color: "#252525" }}>{s.title}</h3>
                   <p className="text-sm leading-relaxed" style={{ color: "#727272" }}>{s.desc}</p>
@@ -532,23 +556,23 @@ export default function Home() {
       </section>
 
       {/* ════════════════════════════════════════
-          CTA
+          CTA / ACCESS
       ════════════════════════════════════════ */}
-      <section className="py-24" style={{ background: "#1e3640" }}>
+      <section className="py-28" style={{ background: "#1e3640" }}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="relative rounded-3xl overflow-hidden p-12 md:p-16 text-center"
             style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.10)" }}>
-            {/* Red glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-48 rounded-full blur-3xl opacity-20 pointer-events-none"
+            {/* Subtle red glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-48 rounded-full blur-3xl opacity-15 pointer-events-none"
               style={{ background: "#e2232a" }} />
 
             <div className="relative">
-              <div className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: "#44ebca" }}>GET STARTED</div>
+              <div className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: "#44ebca" }}>REQUEST ACCESS</div>
               <h2 className="font-display font-bold text-white mb-4" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", letterSpacing: "-0.02em" }}>
                 Ready to Know Where<br />You Stand?
               </h2>
-              <p className="text-lg mb-10 max-w-xl mx-auto" style={{ color: "rgba(255,255,255,0.60)" }}>
-                Contact IOT.nxt to get your organisation provisioned on Utility IQ and start your first energy maturity assessment.
+              <p className="text-lg mb-10 max-w-xl mx-auto" style={{ color: "rgba(255,255,255,0.55)" }}>
+                Contact IOT.nxt to have your organisation provisioned on Utility IQ and begin your first structured energy maturity assessment.
               </p>
               <div id="auth-section" className="flex flex-col items-center gap-4 max-w-sm mx-auto">
                 {/* Auth mode toggle */}
@@ -557,7 +581,7 @@ export default function Home() {
                     <button key={mode} onClick={() => { setAuthMode(mode); setAuthError(""); }}
                       className="flex-1 py-2.5 text-sm font-semibold transition-all"
                       style={{ background: authMode === mode ? "#e2232a" : "transparent", color: authMode === mode ? "#fff" : "rgba(255,255,255,0.50)" }}>
-                      {mode === "login" ? "Sign In" : "Register"}
+                      {mode === "login" ? "Sign In" : "Request Access"}
                     </button>
                   ))}
                 </div>
@@ -579,8 +603,8 @@ export default function Home() {
                   {authError && <p className="text-sm text-center" style={{ color: "#ff8080" }}>{authError}</p>}
                   <button type="submit" disabled={authLoading}
                     className="w-full inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-base text-white transition-all duration-150 active:scale-95 disabled:opacity-60"
-                    style={{ background: "#e2232a", boxShadow: "0 8px 32px rgba(226,35,42,0.45)" }}>
-                    {authLoading ? "Please wait…" : authMode === "login" ? "Sign In" : "Create Account"}
+                    style={{ background: "#e2232a", boxShadow: "0 8px 32px rgba(226,35,42,0.40)" }}>
+                    {authLoading ? "Please wait…" : authMode === "login" ? "Sign In" : "Request Access"}
                     {!authLoading && <ArrowRight className="w-5 h-5" />}
                   </button>
                 </form>
@@ -593,22 +617,22 @@ export default function Home() {
       {/* ════════════════════════════════════════
           FOOTER
       ════════════════════════════════════════ */}
-      <footer className="border-t py-10" style={{ borderColor: "rgba(255,255,255,0.08)", background: "#0d1f26" }}>
+      <footer className="border-t py-12" style={{ borderColor: "rgba(255,255,255,0.08)", background: "#0d1f26" }}>
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <div className="flex flex-col gap-1">
-                <img src={IOTNXT_LOGO} alt="IoT.nxt" className="h-7 w-auto brightness-0 invert" />
-                <div className="font-display font-bold text-white">Utility IQ</div>
-                <div className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>Enterprise Energy Maturity Platform</div>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="flex flex-col gap-2">
+              <img src={IOTNXT_LOGO} alt="IoT.nxt" className="h-7 w-auto brightness-0 invert" />
+              <div className="font-display font-bold text-white">Utility IQ</div>
+              <div className="text-xs font-semibold tracking-wide" style={{ color: "rgba(255,255,255,0.40)" }}>
+                Industry-aligned. Evidence-based. Executive-ready.
               </div>
             </div>
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="flex flex-wrap justify-center gap-5">
               {["ISO 50001", "ISO 55001", "NIST CSF", "IEC 62056", "C2M2", "SEI SGMM"].map((s) => (
-                <span key={s} className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.30)" }}>{s}</span>
+                <span key={s} className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.25)" }}>{s}</span>
               ))}
             </div>
-            <p className="text-xs" style={{ color: "rgba(255,255,255,0.30)" }}>
+            <p className="text-xs" style={{ color: "rgba(255,255,255,0.25)" }}>
               © {new Date().getFullYear()} IOT.nxt. All rights reserved.
             </p>
           </div>

@@ -359,6 +359,45 @@
   .delay-200 { animation-delay: 200ms; }
   .delay-300 { animation-delay: 300ms; }
 
+  /* ── Hero animations ── */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-orb-1 {
+      animation: orbDrift1 18s ease-in-out infinite alternate;
+    }
+    .hero-orb-2 {
+      animation: orbDrift2 14s ease-in-out infinite alternate;
+    }
+    .hero-card-float {
+      animation: cardFloat 5s ease-in-out infinite alternate;
+    }
+    .live-dot-pulse {
+      animation: livePulse 2s ease-in-out infinite;
+    }
+  }
+  @keyframes orbDrift1 {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(40px, -30px) scale(1.08); }
+  }
+  @keyframes orbDrift2 {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-30px, 40px) scale(1.05); }
+  }
+  @keyframes cardFloat {
+    from { transform: translateY(0px); }
+    to   { transform: translateY(-8px); }
+  }
+  @keyframes livePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.4; transform: scale(1.5); }
+  }
+  @keyframes scoreBarGrow {
+    from { width: 0 !important; }
+    to   { width: var(--bar-w); }
+  }
+  @keyframes ringDraw {
+    from { stroke-dasharray: 0 100; }
+  }
+
   /* Container */
   .container {
     width: 100%;

@@ -188,11 +188,19 @@ export default function Home() {
       {/* ════════════════════════════════════════
           HERO
       ════════════════════════════════════════ */}
-      <section id="platform" style={{ background: "#1e3640", paddingTop: "6rem" }}>
-        {/* Red accent bar below nav */}
-        <div className="absolute left-0 right-0 h-1" style={{ background: "#e2232a", top: "64px" }} />
+      <section id="platform" className="relative overflow-hidden" style={{ paddingTop: "6rem", background: "linear-gradient(135deg, #0b1220 0%, #111827 50%, #1f2937 100%)" }}>
 
-        <div className="max-w-7xl mx-auto px-6 pt-20 pb-0">
+        {/* ── Ambient orbs ── */}
+        <div className="hero-orb-1 absolute pointer-events-none" style={{ top: "-80px", left: "-60px", width: "480px", height: "480px", borderRadius: "50%", background: "radial-gradient(circle, rgba(226,35,42,0.18) 0%, transparent 70%)", filter: "blur(40px)" }} />
+        <div className="hero-orb-2 absolute pointer-events-none" style={{ bottom: "-60px", right: "-40px", width: "420px", height: "420px", borderRadius: "50%", background: "radial-gradient(circle, rgba(68,235,202,0.10) 0%, transparent 70%)", filter: "blur(50px)" }} />
+
+        {/* ── Subtle grid texture ── */}
+        <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.04, backgroundImage: "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)", backgroundSize: "48px 48px" }} />
+
+        {/* ── Vignette ── */}
+        <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 0%, transparent 40%, rgba(0,0,0,0.45) 100%)" }} />
+
+        <div className="relative max-w-7xl mx-auto px-6 pt-20 pb-0">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
 
             {/* Left copy */}
@@ -203,7 +211,7 @@ export default function Home() {
                 {AUDIENCE_TAGS.map((tag) => (
                   <span key={tag}
                     className="text-[11px] font-semibold tracking-wide px-3 py-1 rounded-full border"
-                    style={{ borderColor: "rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.60)", background: "rgba(255,255,255,0.05)" }}>
+                    style={{ borderColor: "rgba(255,255,255,0.14)", color: "rgba(255,255,255,0.55)", background: "rgba(255,255,255,0.04)" }}>
                     {tag}
                   </span>
                 ))}
@@ -213,22 +221,27 @@ export default function Home() {
                 style={{ fontSize: "clamp(2.2rem, 4.5vw, 3.6rem)", letterSpacing: "-0.03em" }}>
                 Assess. Benchmark.<br />
                 <span style={{ color: "#e2232a" }}>Transform.</span><br />
-                <span style={{ fontSize: "0.75em", color: "rgba(255,255,255,0.85)" }}>Your Energy &amp; Utility Maturity.</span>
+                <span style={{ fontSize: "0.75em", color: "rgba(255,255,255,0.80)" }}>Your Energy &amp; Utility Maturity.</span>
               </h1>
 
-              <p className="text-lg leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.60)", maxWidth: "520px" }}>
+              <p className="text-lg leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.55)", maxWidth: "520px" }}>
                 A structured, evidence-based platform that turns complex energy and utility assessments into clear maturity scores, gap analysis, and board-ready transformation roadmaps.
               </p>
 
               <div className="flex flex-wrap gap-3 mb-10">
-                <button onClick={() => document.getElementById('auth-section')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-base text-white transition-all duration-150 active:scale-95"
-                  style={{ background: "#e2232a", boxShadow: "0 8px 24px rgba(226,35,42,0.40)" }}>
+                <button
+                  onClick={() => document.getElementById('auth-section')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-base text-white"
+                  style={{ background: "#e2232a", boxShadow: "0 8px 28px rgba(226,35,42,0.45)", transition: "all 200ms cubic-bezier(0.23,1,0.32,1)" }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 14px 36px rgba(226,35,42,0.55)"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = ""; (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 28px rgba(226,35,42,0.45)"; }}>
                   Access Platform <ArrowRight className="w-5 h-5" />
                 </button>
                 <a href="#domains"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-base border transition-all duration-150"
-                  style={{ borderColor: "rgba(255,255,255,0.20)", color: "rgba(255,255,255,0.75)" }}>
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-base border"
+                  style={{ borderColor: "rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.75)", background: "rgba(255,255,255,0.04)", transition: "all 200ms cubic-bezier(0.23,1,0.32,1)" }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.09)"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.04)"; (e.currentTarget as HTMLElement).style.transform = ""; }}>
                   Explore Domains <ChevronRight className="w-4 h-4" />
                 </a>
               </div>
@@ -237,7 +250,7 @@ export default function Home() {
               <div className="flex flex-wrap gap-4">
                 {["ISO 50001", "ISO 55001", "NIST CSF", "IEC 62056"].map((std) => (
                   <div key={std} className="flex items-center gap-1.5 text-xs font-medium"
-                    style={{ color: "rgba(255,255,255,0.40)" }}>
+                    style={{ color: "rgba(255,255,255,0.35)" }}>
                     <CheckCircle className="w-3.5 h-3.5" style={{ color: "#44ebca" }} />
                     {std}
                   </div>
@@ -247,92 +260,125 @@ export default function Home() {
 
             {/* Right — mock assessment dashboard card */}
             <div className="relative animate-fade-up delay-150 hidden lg:block">
-              {/* Glow */}
-              <div className="absolute inset-0 rounded-3xl blur-3xl opacity-25 pointer-events-none"
-                style={{ background: "radial-gradient(ellipse at center, #e2232a, transparent)" }} />
+              {/* Ambient glow behind card */}
+              <div className="absolute pointer-events-none" style={{ inset: "-20px", borderRadius: "2rem", background: "radial-gradient(ellipse at 60% 40%, rgba(226,35,42,0.18) 0%, rgba(68,235,202,0.08) 60%, transparent 80%)", filter: "blur(32px)", zIndex: 0 }} />
 
-              <div className="relative rounded-3xl border overflow-hidden"
-                style={{ background: "rgba(255,255,255,0.05)", borderColor: "rgba(255,255,255,0.12)", backdropFilter: "blur(20px)" }}>
+              {/* Floating card wrapper */}
+              <div className="hero-card-float relative" style={{ zIndex: 1 }}>
+                <div className="relative rounded-3xl overflow-hidden"
+                  style={{
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.13)",
+                    backdropFilter: "blur(24px)",
+                    boxShadow: "0 24px 64px rgba(0,0,0,0.50), 0 1px 0 rgba(255,255,255,0.10) inset"
+                  }}>
 
-                {/* Card header */}
-                <div className="flex items-center justify-between px-5 py-4 border-b"
-                  style={{ borderColor: "rgba(255,255,255,0.10)" }}>
-                  <div>
-                    <div className="text-xs font-bold tracking-widest uppercase mb-0.5" style={{ color: "#44ebca" }}>LIVE ASSESSMENT</div>
-                    <div className="text-sm font-semibold text-white">Metro Utility — Q2 2025</div>
-                  </div>
-                  <div className="px-2.5 py-1 rounded-full text-xs font-bold" style={{ background: "rgba(68,235,202,0.15)", color: "#44ebca" }}>
-                    In Progress
-                  </div>
-                </div>
-
-                {/* Domain scores */}
-                <div className="p-5 space-y-3">
-                  {[
-                    { name: "Meter Management",    score: 3, target: 4 },
-                    { name: "Analytics",           score: 2, target: 4 },
-                    { name: "Cybersecurity",       score: 4, target: 5 },
-                    { name: "Sustainability",      score: 1, target: 3 },
-                    { name: "Asset Operations",    score: 3, target: 4 },
-                  ].map((d) => (
-                    <div key={d.name}>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.70)" }}>{d.name}</span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs font-bold" style={{ color: "#e2232a" }}>{d.score}/5</span>
-                          <span className="text-xs" style={{ color: "rgba(255,255,255,0.30)" }}>→</span>
-                          <span className="text-xs font-bold" style={{ color: "#44ebca" }}>{d.target}/5</span>
-                        </div>
-                      </div>
-                      <div className="flex gap-1">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <div key={i} className="h-1.5 flex-1 rounded-full"
-                            style={{
-                              background: i < d.score ? "#e2232a" : i < d.target ? "rgba(68,235,202,0.25)" : "rgba(255,255,255,0.08)"
-                            }} />
-                        ))}
-                      </div>
+                  {/* Card header */}
+                  <div className="flex items-center justify-between px-5 py-4 border-b"
+                    style={{ borderColor: "rgba(255,255,255,0.09)", background: "rgba(255,255,255,0.03)" }}>
+                    <div>
+                      <div className="text-xs font-bold tracking-widest uppercase mb-0.5" style={{ color: "#44ebca" }}>LIVE ASSESSMENT</div>
+                      <div className="text-sm font-semibold text-white">Metro Utility — Q2 2025</div>
                     </div>
-                  ))}
-                </div>
+                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full" style={{ background: "rgba(68,235,202,0.12)", border: "1px solid rgba(68,235,202,0.25)" }}>
+                      {/* Pulsing live dot */}
+                      <span className="relative flex h-2 w-2">
+                        <span className="live-dot-pulse absolute inline-flex h-full w-full rounded-full" style={{ background: "#44ebca", opacity: 0.6 }} />
+                        <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: "#44ebca" }} />
+                      </span>
+                      <span className="text-xs font-bold" style={{ color: "#44ebca" }}>In Progress</span>
+                    </div>
+                  </div>
 
-                {/* Dashboard metrics row */}
-                <div className="mx-5 mb-4 grid grid-cols-3 gap-3">
-                  <div className="p-3 rounded-xl border text-center" style={{ background: "rgba(226,35,42,0.08)", borderColor: "rgba(226,35,42,0.20)" }}>
-                    <div className="font-display text-xl font-bold" style={{ color: "#e2232a" }}>2.6</div>
-                    <div className="text-[10px] font-medium mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>Overall Score</div>
-                  </div>
-                  <div className="p-3 rounded-xl border text-center" style={{ background: "rgba(226,35,42,0.08)", borderColor: "rgba(226,35,42,0.20)" }}>
-                    <div className="font-display text-xl font-bold" style={{ color: "#e2232a" }}>+2.0</div>
-                    <div className="text-[10px] font-medium mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>Highest Gap</div>
-                  </div>
-                  <div className="p-3 rounded-xl border text-center" style={{ background: "rgba(68,235,202,0.08)", borderColor: "rgba(68,235,202,0.20)" }}>
-                    <div className="font-display text-xl font-bold" style={{ color: "#44ebca" }}>14</div>
-                    <div className="text-[10px] font-medium mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>Evidence Items</div>
-                  </div>
-                </div>
-
-                {/* Assessors */}
-                <div className="px-5 pb-5 flex items-center justify-between">
-                  <div className="flex -space-x-2">
-                    {["#e2232a","#1e3640","#44ebca","#727272"].map((c, i) => (
-                      <div key={i} className="w-7 h-7 rounded-full border-2 flex items-center justify-center text-[10px] font-bold text-white"
-                        style={{ background: c, borderColor: "rgba(255,255,255,0.15)" }}>
-                        {["A","B","C","D"][i]}
+                  {/* Domain scores — animated bars */}
+                  <div className="p-5 space-y-3">
+                    {[
+                      { name: "Meter Management",  score: 3, target: 4, delay: "0.4s" },
+                      { name: "Analytics",          score: 2, target: 4, delay: "0.55s" },
+                      { name: "Cybersecurity",      score: 4, target: 5, delay: "0.7s" },
+                      { name: "Sustainability",     score: 1, target: 3, delay: "0.85s" },
+                      { name: "Asset Operations",   score: 3, target: 4, delay: "1.0s" },
+                    ].map((d) => (
+                      <div key={d.name}>
+                        <div className="flex items-center justify-between mb-1.5">
+                          <span className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.65)" }}>{d.name}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-bold" style={{ color: "#e2232a" }}>{d.score}/5</span>
+                            <span className="text-xs" style={{ color: "rgba(255,255,255,0.25)" }}>→</span>
+                            <span className="text-xs font-bold" style={{ color: "#44ebca" }}>{d.target}/5</span>
+                          </div>
+                        </div>
+                        <div className="flex gap-1">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <div key={i} className="h-1.5 flex-1 rounded-full"
+                              style={{
+                                background: i < d.score ? "#e2232a" : i < d.target ? "rgba(68,235,202,0.22)" : "rgba(255,255,255,0.07)",
+                                transform: i < d.score ? "scaleX(1)" : undefined,
+                                transformOrigin: "left",
+                                transition: `transform 600ms cubic-bezier(0.23,1,0.32,1) ${d.delay}`,
+                              }} />
+                          ))}
+                        </div>
                       </div>
                     ))}
                   </div>
-                  <span className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>4 assessors · 3 domains complete</span>
+
+                  {/* Dashboard metrics row */}
+                  <div className="mx-5 mb-4 grid grid-cols-3 gap-3">
+                    <div className="p-3 rounded-xl border text-center" style={{ background: "rgba(226,35,42,0.07)", borderColor: "rgba(226,35,42,0.18)" }}>
+                      <div className="font-display text-xl font-bold" style={{ color: "#e2232a" }}>2.6</div>
+                      <div className="text-[10px] font-medium mt-0.5" style={{ color: "rgba(255,255,255,0.40)" }}>Overall Score</div>
+                    </div>
+                    <div className="p-3 rounded-xl border text-center" style={{ background: "rgba(226,35,42,0.07)", borderColor: "rgba(226,35,42,0.18)" }}>
+                      <div className="font-display text-xl font-bold" style={{ color: "#e2232a" }}>+2.0</div>
+                      <div className="text-[10px] font-medium mt-0.5" style={{ color: "rgba(255,255,255,0.40)" }}>Highest Gap</div>
+                    </div>
+                    <div className="p-3 rounded-xl border text-center" style={{ background: "rgba(68,235,202,0.07)", borderColor: "rgba(68,235,202,0.18)" }}>
+                      <div className="font-display text-xl font-bold" style={{ color: "#44ebca" }}>14</div>
+                      <div className="text-[10px] font-medium mt-0.5" style={{ color: "rgba(255,255,255,0.40)" }}>Evidence Items</div>
+                    </div>
+                  </div>
+
+                  {/* Overall score with animated ring */}
+                  <div className="mx-5 mb-5 p-4 rounded-2xl flex items-center gap-4" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                    <div className="relative w-14 h-14 flex-shrink-0">
+                      <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
+                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="3" />
+                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#e2232a" strokeWidth="3"
+                          strokeDasharray="52 100" strokeLinecap="round"
+                          style={{ animation: "ringDraw 1.2s cubic-bezier(0.23,1,0.32,1) 0.3s both" }} />
+                      </svg>
+                      <div className="absolute inset-0 flex items-center justify-center font-bold text-xs text-white">52%</div>
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold tracking-widest uppercase mb-0.5" style={{ color: "rgba(255,255,255,0.35)" }}>Overall Maturity</div>
+                      <div className="font-display text-2xl font-bold" style={{ color: "#e2232a" }}>2.6 <span className="text-sm font-normal" style={{ color: "rgba(255,255,255,0.35)" }}>/5</span></div>
+                      <div className="text-xs font-medium" style={{ color: "#44ebca" }}>Understand — Energy Intelligence</div>
+                    </div>
+                  </div>
+
+                  {/* Assessors */}
+                  <div className="px-5 pb-5 flex items-center justify-between">
+                    <div className="flex -space-x-2">
+                      {["#e2232a","#1e3640","#44ebca","#727272"].map((c, i) => (
+                        <div key={i} className="w-7 h-7 rounded-full border-2 flex items-center justify-center text-[10px] font-bold text-white"
+                          style={{ background: c, borderColor: "rgba(255,255,255,0.12)" }}>
+                          {["A","B","C","D"][i]}
+                        </div>
+                      ))}
+                    </div>
+                    <span className="text-xs" style={{ color: "rgba(255,255,255,0.30)" }}>4 assessors · 3 domains complete</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Wave divider */}
-        <div style={{ marginTop: "4rem", lineHeight: 0 }}>
-          <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style={{ width: "100%", height: "80px", display: "block" }}>
-            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#ffffff" />
+        {/* ── Angled section transition ── */}
+        <div style={{ marginTop: "5rem", lineHeight: 0 }}>
+          <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style={{ width: "100%", height: "60px", display: "block" }}>
+            <path d="M0,0 L1440,40 L1440,60 L0,60 Z" fill="#ffffff" />
           </svg>
         </div>
       </section>
